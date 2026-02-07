@@ -25,6 +25,9 @@ async def lifespan(app: FastAPI):
     app.state.engine = engine
     yield
 
+    # Cleanup: close real eBay client if it exists
+    if hasattr(app.state, "_ebay_client"):
+        await app.state._ebay_client.close()
     await engine.dispose()
 
 

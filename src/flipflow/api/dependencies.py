@@ -24,8 +24,13 @@ async def get_db(request: Request) -> AsyncSession:
 
 
 async def get_ebay(request: Request):
+    """Get eBay gateway — mock or real based on config mode."""
     config = request.app.state.config
     if config.ebay_mode == "mock":
         return MockEbayClient(load_fixtures=True)
-    # Future: return RealEbayClient(config)
-    return MockEbayClient(load_fixtures=True)
+
+    # Sandbox or production: use real client as singleton
+    if not hasattr(request.app.state, "_ebay_client"):
+        from flipflow.infrastructure.ebay import RealEbayClient
+        request.app.state._ebay_client = RealEbayClient(config)
+    return request.app.state._ebay_client

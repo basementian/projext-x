@@ -1,8 +1,8 @@
 # FlipFlow — Progress
 
 ## Current Status
-**Phase:** Phase 8 Complete (all services implemented)
-**Tests:** 218 passing
+**Phase:** Phase 9 Complete (real eBay client built)
+**Tests:** 284 passing
 **Stack:** Python 3.12 / FastAPI / SQLAlchemy async / Typer CLI
 
 ## What's Working
@@ -20,10 +20,11 @@
 - **Offer Sniper** — watcher polling, 10% discount offers, 24h cooldown between offers
 - **REST API** — health, listings CRUD, zombie scan/resurrect, queue management
 - **Mock eBay Client** — stateful in-memory mock implementing EbayGateway protocol
+- **Real eBay Client** — OAuth 2.0 token manager, rate limiter with backoff, 7 endpoint modules (inventory, offers, analytics, marketing, browse, negotiation, account)
 - **Scheduler** — APScheduler with job registry (zombie scan, queue release, store pulse, etc.)
 
 ## What's Next
-- [ ] Real eBay REST API client (Phase 9 — needs API keys)
+- [ ] Configure eBay API keys and test with sandbox
 - [ ] Android app (future)
 - [ ] iOS app (future)
 - [ ] Web dashboard (future)
@@ -43,3 +44,6 @@
 - Built Phase 6: APScheduler integration with job registry
 - Built Phase 7: FastAPI REST API with 7 endpoints (7 API tests)
 - Built Phase 8: All remaining services — Mobile Enforcer, STR Enforcer, Store Pulse, Photo Shuffler, Kickstarter, Purgatory, Offer Sniper (99 new tests, 218 total)
+
+### 2026-02-07
+- Built Phase 9: Real eBay client — token manager, rate limiter, HTTP client, 7 endpoint modules, RealEbayClient facade (66 new tests, 284 total)
