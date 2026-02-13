@@ -64,3 +64,7 @@ class FlipFlowConfig(BaseSettings):
     offer_auto_accept_threshold: float = 0.90
     offer_counter_threshold: float = 0.75
     offer_counter_percent: float = 0.95
+
+    # API Security
+    api_key: str = ""  # Required for production; empty = no auth (dev only)
+    cors_allowed_origins: str = "http://localhost:3000,http://localhost:8081"

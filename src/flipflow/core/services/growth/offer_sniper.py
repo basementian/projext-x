@@ -6,10 +6,13 @@ and inbound offer handling (auto-accept/counter/reject).
 Competitors like MyListerHub use tiered thresholds. FlipFlow now matches that.
 """
 
+import logging
 from datetime import datetime, timedelta, timezone
 
 from sqlalchemy import select, and_
 from sqlalchemy.ext.asyncio import AsyncSession
+
+logger = logging.getLogger(__name__)
 
 from flipflow.core.config import FlipFlowConfig
 from flipflow.core.constants import ListingStatus, OfferAction, OfferStatus
@@ -139,14 +142,18 @@ class OfferSniper:
                             "discount_percent": discount_pct,
                             "days_active": listing.days_active,
                         })
-                    except Exception:
+                    except Exception as e:
+                        logger.error("Failed to send offer for listing %d to %s: %s", listing.id, buyer_id, e)
                         errors += 1
 
-            except Exception:
+            except Exception as e:
+                logger.error("Failed to get watchers for listing %d: %s", listing.id, e)
                 errors += 1
 
         await db.flush()
 
+        logger.info("Offer sniper: %d checked, %d offers sent, %d errors",
+                    len(active_listings), offers_sent, errors)
         return {
             "listings_checked": len(active_listings),
             "offers_sent": offers_sent,

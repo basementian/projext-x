@@ -8,10 +8,13 @@ Always calculated from list_price (original), never compounding.
 Never drops below ProfitFloorCalc.find_minimum_price() — the profit floor is the hard stop.
 """
 
+import logging
 from datetime import datetime, timezone
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+
+logger = logging.getLogger(__name__)
 
 from flipflow.core.config import FlipFlowConfig
 from flipflow.core.constants import ListingStatus
@@ -131,6 +134,8 @@ class Repricer:
 
         await db.flush()
 
+        logger.info("Repricer scan: %d scanned, %d repriced, %d skipped, %d eBay errors",
+                    len(active_listings), len(repriced), skipped, ebay_errors)
         return {
             "total_scanned": len(active_listings),
             "repriced": len(repriced),

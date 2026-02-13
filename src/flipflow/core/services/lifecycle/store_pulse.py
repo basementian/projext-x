@@ -7,10 +7,14 @@ your listings' position in search results.
 Flow: Toggle Handling Time 1→2 days, wait 24h, toggle back. Monthly.
 """
 
+import logging
+
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from flipflow.core.config import FlipFlowConfig
+
+logger = logging.getLogger(__name__)
 from flipflow.core.constants import ListingStatus
 from flipflow.core.models.listing import Listing
 from flipflow.core.protocols.ebay_gateway import EbayGateway
@@ -68,6 +72,7 @@ class StorePulse:
                 "target_handling_days": target_days,
             }
         except Exception as e:
+            logger.error("Store pulse bulk update failed: %s", e)
             return {
                 "updated": 0,
                 "errors": len(updates),

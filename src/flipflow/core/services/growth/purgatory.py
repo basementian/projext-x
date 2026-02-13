@@ -9,8 +9,12 @@ Logic: If zombie_cycle_count > 3:
   3. If unsold in 7 days → suggest "Donate/Trash"
 """
 
+import logging
+
 from flipflow.core.config import FlipFlowConfig
 from flipflow.core.constants import ListingStatus
+
+logger = logging.getLogger(__name__)
 from flipflow.core.models.listing import Listing
 from flipflow.core.protocols.ebay_gateway import EbayGateway
 from flipflow.core.services.gatekeeper.profit_floor import ProfitFloorCalc
@@ -94,6 +98,7 @@ class Purgatory:
                     "price": markdown,
                 }])
             except Exception as e:
+                logger.error("Failed to update purgatory price for listing %d: %s", listing_id, e)
                 return {"success": False, "error": f"eBay update failed: {e}"}
 
         await db.flush()

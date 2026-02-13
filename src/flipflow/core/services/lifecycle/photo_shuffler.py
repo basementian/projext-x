@@ -6,10 +6,14 @@ to the "Main" slot tests if a different angle gets the click.
 Rule: If views == 0 after 14 days → swap PictureURL[0] with PictureURL[1].
 """
 
+import logging
+
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from flipflow.core.config import FlipFlowConfig
+
+logger = logging.getLogger(__name__)
 from flipflow.core.constants import ListingStatus
 from flipflow.core.models.listing import Listing
 from flipflow.core.protocols.ebay_gateway import EbayGateway
@@ -66,6 +70,7 @@ class PhotoShuffler:
                         "new_main": new_photos[0],
                     })
                 except Exception as e:
+                    logger.error("Photo shuffle failed for listing %d: %s", listing.id, e)
                     skipped.append({
                         "listing_id": listing.id,
                         "sku": listing.sku,
@@ -74,6 +79,8 @@ class PhotoShuffler:
 
         await db.flush()
 
+        logger.info("Photo shuffle: %d candidates, %d shuffled, %d skipped",
+                    len(candidates), len(shuffled), len(skipped))
         return {
             "candidates": len(candidates),
             "shuffled": len(shuffled),

@@ -7,12 +7,15 @@ The queue stores "ready" listings and releases them in batches
 during the configurable surge window.
 """
 
+import logging
 import uuid
 from datetime import datetime, timezone
 
 import pytz
 from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
+
+logger = logging.getLogger(__name__)
 
 from flipflow.core.config import FlipFlowConfig
 from flipflow.core.constants import ListingStatus, QueueStatus
@@ -110,10 +113,12 @@ class SmartQueue:
                 released.append(entry)
 
             except Exception as e:
+                logger.error("Failed to release queue entry %d: %s", entry.id, e)
                 entry.status = QueueStatus.FAILED
                 entry.error_message = str(e)
 
         await db.flush()
+        logger.info("Queue batch %s: released %d/%d entries", batch_id, len(released), len(entries))
         return released
 
     def is_surge_window_active(self, now: datetime | None = None) -> bool:

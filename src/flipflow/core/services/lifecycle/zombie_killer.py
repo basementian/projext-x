@@ -8,10 +8,13 @@ Zombies have a "stale" Item ID. They are invisible to search.
 The only cure is to generate a new Item ID (via the Resurrector).
 """
 
+import logging
 from datetime import datetime, timezone
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+
+logger = logging.getLogger(__name__)
 
 from flipflow.core.config import FlipFlowConfig
 from flipflow.core.constants import ListingStatus, ZombieAction
@@ -84,6 +87,8 @@ class ZombieKiller:
                     current_price=listing.current_price or listing.list_price,
                 ))
 
+        logger.info("Zombie scan complete: %d scanned, %d zombies, %d purgatory candidates",
+                    len(active_listings), len(zombies), purgatory_count)
         return ZombieScanResult(
             total_scanned=len(active_listings),
             zombies_found=len(zombies),
@@ -98,6 +103,7 @@ class ZombieKiller:
             raise ValueError(f"Listing {listing_id} not found")
 
         listing.status = ListingStatus.ZOMBIE
+        logger.info("Flagging listing %d (sku=%s) as zombie", listing_id, listing.sku)
 
         action = ZombieAction.FLAGGED
         if listing.zombie_cycle_count >= self.max_cycles:

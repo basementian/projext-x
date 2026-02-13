@@ -8,10 +8,13 @@ Uses existing Resurrector pipeline (withdraw → cooldown → new SKU → publis
 Does NOT increment zombie_cycle_count — this is preventive, not reactive.
 """
 
+import logging
 from datetime import datetime, timezone
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+
+logger = logging.getLogger(__name__)
 
 from flipflow.core.config import FlipFlowConfig
 from flipflow.core.constants import ListingStatus, RelistAction
@@ -111,6 +114,8 @@ class AutoRelister:
 
         await db.flush()
 
+        logger.info("Auto relister: %d scanned, %d relisted, %d skipped, %d errors",
+                    len(active_listings), len(relisted), skipped, errors)
         return {
             "total_scanned": len(active_listings),
             "relisted": len(relisted),

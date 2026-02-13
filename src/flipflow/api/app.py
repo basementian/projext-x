@@ -1,14 +1,18 @@
 """FastAPI application factory."""
 
+import logging
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from flipflow.core.config import FlipFlowConfig
+from flipflow.core.logging_config import setup_logging
 from flipflow.infrastructure.database.session import create_engine
 from flipflow.core.models.base import Base
 from flipflow.api.routers import health, listings, zombies, queue, repricer, relister, offers
+
+logger = logging.getLogger(__name__)
 
 
 @asynccontextmanager
@@ -24,18 +28,22 @@ async def lifespan(app: FastAPI):
             await conn.run_sync(Base.metadata.create_all)
 
     app.state.engine = engine
+    logger.info("FlipFlow started (mode=%s)", config.ebay_mode)
     yield
 
     # Cleanup: close real eBay client if it exists
     if hasattr(app.state, "_ebay_client"):
         await app.state._ebay_client.close()
     await engine.dispose()
+    logger.info("FlipFlow shutdown complete")
 
 
 def create_app(config: FlipFlowConfig | None = None) -> FastAPI:
     """Create and configure the FastAPI application."""
     if config is None:
         config = FlipFlowConfig(_env_file=None)
+
+    setup_logging()
 
     app = FastAPI(
         title="FlipFlow API",
@@ -45,10 +53,16 @@ def create_app(config: FlipFlowConfig | None = None) -> FastAPI:
     )
     app.state.config = config
 
-    # CORS — allow Android app to reach the API
+    # API key auth — only enabled when api_key is set
+    if config.api_key:
+        from flipflow.api.middleware import ApiKeyMiddleware
+        app.add_middleware(ApiKeyMiddleware, api_key=config.api_key)
+
+    # CORS — configurable origins (defaults to localhost for dev)
+    origins = [o.strip() for o in config.cors_allowed_origins.split(",") if o.strip()]
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"],
+        allow_origins=origins,
         allow_methods=["*"],
         allow_headers=["*"],
     )

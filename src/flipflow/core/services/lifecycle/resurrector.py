@@ -11,9 +11,12 @@ Flow:
 """
 
 import asyncio
+import logging
 from datetime import datetime, timezone
 
 from sqlalchemy.ext.asyncio import AsyncSession
+
+logger = logging.getLogger(__name__)
 
 from flipflow.core.config import FlipFlowConfig
 from flipflow.core.constants import ListingStatus, ZombieAction
@@ -43,12 +46,14 @@ class Resurrector:
         old_offer_id = listing.offer_id
         cycle = listing.zombie_cycle_count + 1
         new_sku = self._generate_resurrection_sku(listing.sku, cycle)
+        logger.info("Resurrecting listing %d (sku=%s) cycle %d", listing_id, listing.sku, cycle)
 
         # Step 1: Withdraw the existing offer (ends the listing on eBay)
         if old_offer_id:
             try:
                 await self.ebay.withdraw_offer(old_offer_id)
             except Exception as e:
+                logger.error("Failed to withdraw offer for listing %d: %s", listing_id, e)
                 return self._fail(listing, cycle, f"Failed to withdraw offer: {e}")
 
         # Step 2: Cooldown — eBay needs time to clear the "Active" flag
@@ -73,6 +78,7 @@ class Resurrector:
         try:
             await self.ebay.create_inventory_item(new_sku, item_data)
         except Exception as e:
+            logger.error("Failed to create inventory item for listing %d: %s", listing_id, e)
             return self._fail(listing, cycle, f"Failed to create inventory item: {e}")
 
         # Step 5: Create and publish offer

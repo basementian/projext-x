@@ -5,10 +5,13 @@ to rank. Ad spend buys that history. Auto-creates a Promoted Listings
 Standard campaign at 1.5% CPS for all new listings, runs for 14 days.
 """
 
+import logging
 from datetime import datetime, timedelta, timezone
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+
+logger = logging.getLogger(__name__)
 
 from flipflow.core.config import FlipFlowConfig
 from flipflow.core.constants import CampaignStatus, CampaignType, ListingStatus
@@ -65,6 +68,7 @@ class Kickstarter:
             })
             ebay_campaign_id = ebay_result.get("campaignId")
         except Exception as e:
+            logger.error("Failed to create campaign for listing %d: %s", listing_id, e)
             return {"success": False, "error": f"eBay API error: {e}"}
 
         campaign = Campaign(
@@ -122,4 +126,5 @@ class Kickstarter:
                 errors += 1
 
         await db.flush()
+        logger.info("Kickstarter cleanup: %d expired, %d ended, %d errors", len(expired), ended, errors)
         return {"expired_found": len(expired), "ended": ended, "errors": errors}
