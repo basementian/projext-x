@@ -205,6 +205,20 @@ class MockEbayClient:
         self._check_failure("get_watchers")
         return self.watchers.get(listing_id, [])
 
+    # === Negotiation ===
+
+    async def respond_to_offer(
+        self, listing_id: str, offer_id: str, action: str, counter_amount: float | None = None,
+    ) -> dict:
+        self._check_failure("respond_to_offer")
+        return {
+            "listingId": listing_id,
+            "offerId": offer_id,
+            "action": action,
+            "counterAmount": counter_amount,
+            "status": "SUCCESS",
+        }
+
     # === Account ===
 
     async def update_handling_time(self, policy_id: str, handling_days: int) -> dict:

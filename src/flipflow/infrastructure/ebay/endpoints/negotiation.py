@@ -52,3 +52,23 @@ class NegotiationEndpoints:
                         "watchDate": buyer.get("addedDate", ""),
                     })
         return watchers
+
+    async def respond_to_offer(
+        self, listing_id: str, offer_id: str, action: str, counter_amount: float | None = None,
+    ) -> dict:
+        """POST /sell/negotiation/v1/respond_to_offer
+
+        Actions: accept, counter, reject.
+        """
+        payload = {
+            "offerId": offer_id,
+            "action": action.upper(),
+        }
+        if counter_amount is not None:
+            payload["counterOffer"] = {
+                "price": {"currency": "USD", "value": str(counter_amount)},
+            }
+        response = await self._http.post(
+            f"{self.BASE}/respond_to_offer", json=payload,
+        )
+        return response.json()

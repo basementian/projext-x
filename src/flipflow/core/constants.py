@@ -76,3 +76,20 @@ class STRSource:
     MANUAL = "manual"
     API = "api"
     ESTIMATED = "estimated"
+
+
+class RelistAction:
+    PREVENTIVE_RELIST = "preventive_relist"
+
+
+class OfferStatus:
+    SENT = "sent"
+    ACCEPTED = "accepted"
+    DECLINED = "declined"
+    EXPIRED = "expired"
+
+
+class OfferAction:
+    ACCEPT = "accept"
+    COUNTER = "counter"
+    REJECT = "reject"

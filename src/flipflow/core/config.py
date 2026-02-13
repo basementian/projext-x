@@ -51,3 +51,16 @@ class FlipFlowConfig(BaseSettings):
 
     # Store Pulse
     store_pulse_day_of_month: int = 1
+
+    # Repricer — "days:percent" pairs, comma-separated
+    reprice_steps: str = "7:5,14:10,30:15,45:20"
+
+    # Auto Relister
+    relist_cadence_days: int = 30
+    relist_views_threshold: int = 50
+
+    # Offer tiers — "days:percent" pairs for outbound offers
+    offer_tiers: str = "0:5,14:10,30:15,45:20"
+    offer_auto_accept_threshold: float = 0.90
+    offer_counter_threshold: float = 0.75
+    offer_counter_percent: float = 0.95

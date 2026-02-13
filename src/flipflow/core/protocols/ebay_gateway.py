@@ -94,6 +94,14 @@ class EbayGateway(Protocol):
         """Get list of watchers for a listing."""
         ...
 
+    # === Negotiation ===
+
+    async def respond_to_offer(
+        self, listing_id: str, offer_id: str, action: str, counter_amount: float | None = None,
+    ) -> dict:
+        """Respond to an incoming buyer offer (accept, counter, or reject)."""
+        ...
+
     # === Account ===
 
     async def update_handling_time(self, policy_id: str, handling_days: int) -> dict:

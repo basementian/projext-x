@@ -51,12 +51,16 @@ class Listing(Base, TimestampMixin, SoftDeleteMixin):
     offer_id: Mapped[str | None] = mapped_column(String(64), nullable=True)
     last_offer_sent_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 
+    # Repricing tracking
+    last_repriced_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+
     # Relationships
     snapshots: Mapped[list["ListingSnapshot"]] = relationship(back_populates="listing")
     zombie_records: Mapped[list["ZombieRecord"]] = relationship(back_populates="listing")
     campaigns: Mapped[list["Campaign"]] = relationship(back_populates="listing")
     profit_records: Mapped[list["ProfitRecord"]] = relationship(back_populates="listing")
     queue_entries: Mapped[list["QueueEntry"]] = relationship(back_populates="listing")
+    offer_records: Mapped[list["OfferRecord"]] = relationship(back_populates="listing")
 
     @property
     def photo_urls(self) -> list[str]:

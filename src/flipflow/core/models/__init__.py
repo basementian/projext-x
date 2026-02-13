@@ -8,6 +8,7 @@ from flipflow.core.models.listing_snapshot import ListingSnapshot
 from flipflow.core.models.profit_record import ProfitRecord
 from flipflow.core.models.queue_entry import QueueEntry
 from flipflow.core.models.zombie_record import ZombieRecord
+from flipflow.core.models.offer_record import OfferRecord
 
 __all__ = [
     "Base",
@@ -17,6 +18,7 @@ __all__ = [
     "JobLog",
     "Listing",
     "ListingSnapshot",
+    "OfferRecord",
     "ProfitRecord",
     "QueueEntry",
     "ZombieRecord",

@@ -117,6 +117,15 @@ class RealEbayClient:
     async def get_watchers(self, listing_id: str) -> list[dict]:
         return await self._negotiation.get_watchers(listing_id)
 
+    # === Negotiation ===
+
+    async def respond_to_offer(
+        self, listing_id: str, offer_id: str, action: str, counter_amount: float | None = None,
+    ) -> dict:
+        return await self._negotiation.respond_to_offer(
+            listing_id, offer_id, action, counter_amount,
+        )
+
     # === Account ===
 
     async def update_handling_time(self, policy_id: str, handling_days: int) -> dict:

@@ -23,7 +23,7 @@ class TestProtocolCompliance:
         client = RealEbayClient(sandbox_config)
         assert isinstance(client, EbayGateway)
 
-    def test_has_all_17_protocol_methods(self, sandbox_config):
+    def test_has_all_18_protocol_methods(self, sandbox_config):
         client = RealEbayClient(sandbox_config)
         expected_methods = [
             # Inventory (5)
@@ -49,6 +49,8 @@ class TestProtocolCompliance:
             # Buyer Engagement (2)
             "send_offer_to_buyer",
             "get_watchers",
+            # Negotiation (1)
+            "respond_to_offer",
             # Account (1)
             "update_handling_time",
         ]
