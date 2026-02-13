@@ -1,16 +1,25 @@
 """FlipFlow configuration via environment variables."""
 
+from typing import Literal
+
+from pydantic import Field, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class FlipFlowConfig(BaseSettings):
     model_config = SettingsConfigDict(env_prefix="FLIPFLOW_", env_file=".env")
 
+    # Runtime
+    app_env: Literal["development", "staging", "production"] = "development"
+    debug: bool = False
+    allowed_origins: list[str] = Field(default_factory=list)
+    allowed_hosts: list[str] = Field(default_factory=lambda: ["*"])
+
     # Database
     database_url: str = "sqlite+aiosqlite:///./flipflow.db"
 
     # eBay
-    ebay_mode: str = "mock"  # "mock" | "sandbox" | "production"
+    ebay_mode: Literal["mock", "sandbox", "production"] = "mock"
     ebay_client_id: str = ""
     ebay_client_secret: str = ""
     ebay_redirect_uri: str = ""
@@ -51,3 +60,35 @@ class FlipFlowConfig(BaseSettings):
 
     # Store Pulse
     store_pulse_day_of_month: int = 1
+
+    @model_validator(mode="after")
+    def validate_config(self) -> "FlipFlowConfig":
+        """Validate configuration consistency and production safety."""
+        if self.ebay_mode != "mock":
+            required = {
+                "ebay_client_id": self.ebay_client_id,
+                "ebay_client_secret": self.ebay_client_secret,
+                "ebay_refresh_token": self.ebay_refresh_token,
+            }
+            missing = [name for name, value in required.items() if not value.strip()]
+            if missing:
+                raise ValueError(
+                    "Missing required eBay credentials for non-mock mode: "
+                    + ", ".join(missing)
+                )
+
+        if not 0 < self.ebay_base_fee_rate < 1:
+            raise ValueError("ebay_base_fee_rate must be between 0 and 1")
+        if not 0 < self.payment_processing_rate < 1:
+            raise ValueError("payment_processing_rate must be between 0 and 1")
+        if self.queue_batch_size < 1:
+            raise ValueError("queue_batch_size must be >= 1")
+        if self.surge_window_start_hour == self.surge_window_end_hour:
+            raise ValueError("surge_window_start_hour and surge_window_end_hour must differ")
+
+        if self.app_env == "production" and self.allowed_hosts == ["*"]:
+            raise ValueError(
+                "allowed_hosts cannot be wildcard in production; set explicit hostnames"
+            )
+
+        return self

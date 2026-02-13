@@ -3,6 +3,9 @@
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
+from starlette.middleware.trustedhost import TrustedHostMiddleware
 
 from flipflow.core.config import FlipFlowConfig
 from flipflow.infrastructure.database.session import create_engine
@@ -40,9 +43,22 @@ def create_app(config: FlipFlowConfig | None = None) -> FastAPI:
         title="FlipFlow API",
         description="Algorithmic Asset Manager for eBay Listings",
         version="0.1.0",
+        debug=config.debug,
         lifespan=lifespan,
     )
     app.state.config = config
+
+    # Production-focused middleware
+    app.add_middleware(GZipMiddleware, minimum_size=1000)
+    app.add_middleware(TrustedHostMiddleware, allowed_hosts=config.allowed_hosts)
+    if config.allowed_origins:
+        app.add_middleware(
+            CORSMiddleware,
+            allow_origins=config.allowed_origins,
+            allow_credentials=True,
+            allow_methods=["*"],
+            allow_headers=["*"],
+        )
 
     # Register routers
     app.include_router(health.router, prefix="/api/v1", tags=["health"])

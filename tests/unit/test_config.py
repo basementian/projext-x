@@ -1,5 +1,7 @@
 """Test FlipFlow configuration loading."""
 
+import pytest
+
 from flipflow.core.config import FlipFlowConfig
 
 
@@ -34,3 +36,25 @@ def test_config_mock_mode_no_keys_needed():
     config = FlipFlowConfig(ebay_mode="mock", _env_file=None)
     assert config.ebay_client_id == ""
     assert config.ebay_client_secret == ""
+
+
+def test_config_requires_credentials_for_non_mock():
+    """Non-mock mode should require eBay credentials."""
+    with pytest.raises(ValueError, match="Missing required eBay credentials"):
+        FlipFlowConfig(ebay_mode="sandbox", _env_file=None)
+
+
+def test_config_production_disallows_wildcard_hosts():
+    """Production should require explicit host allowlist."""
+    with pytest.raises(ValueError, match="allowed_hosts cannot be wildcard"):
+        FlipFlowConfig(app_env="production", allowed_hosts=["*"], _env_file=None)
+
+
+def test_config_production_with_explicit_hosts_is_valid():
+    """Production config accepts explicit trusted hosts."""
+    config = FlipFlowConfig(
+        app_env="production",
+        allowed_hosts=["api.flipflow.example"],
+        _env_file=None,
+    )
+    assert config.allowed_hosts == ["api.flipflow.example"]

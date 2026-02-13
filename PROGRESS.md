@@ -47,3 +47,8 @@
 
 ### 2026-02-07
 - Built Phase 9: Real eBay client — token manager, rate limiter, HTTP client, 7 endpoint modules, RealEbayClient facade (66 new tests, 284 total)
+
+
+### 2026-02-13
+- Production hardening: strict config validation for env/mode/credentials, trusted host allowlist checks, optional CORS allowlist config, API gzip middleware
+- Added tests for production config constraints and trusted host enforcement
