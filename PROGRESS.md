@@ -25,6 +25,7 @@
 - **Real eBay Client** — OAuth 2.0 token manager, rate limiter with backoff, 7 endpoint modules
 - **Scheduler** — APScheduler with job registry (zombie scan, queue release, store pulse, etc.)
 - **Android App** — Expo/React Native, 5-tab layout, API integration
+- **Web UI** — 5 Tailwind prototype screens served from FastAPI (dashboard, onboarding, scanner, zombie killer, A/B test)
 
 ## Production Readiness (2026-02-13)
 - **API Key Authentication** — X-API-Key middleware on all endpoints (health is public), configurable via env
@@ -37,7 +38,8 @@
 ## What's Next
 - [ ] Tier 2: analytics dashboard, dynamic kickstarter rates, smarter photo rotation
 - [ ] Tier 3: price randomization, bulk edit service, per-item timeline
-- [ ] iOS app, web dashboard, Android UI polish
+- [x] ~~Web dashboard~~ UI prototype screens served from FastAPI
+- [ ] iOS app, Android UI polish
 - [ ] PostgreSQL for production deployment
 - [ ] Rate limiting on API endpoints
 
@@ -69,3 +71,4 @@
 
 ### 2026-02-13
 - Production readiness: API key auth, CORS lockdown, structured logging, CI/CD pipeline, Alembic initial migration, enhanced health check (355 tests)
+- UI prototype screens: 5 Tailwind dark-mode pages (dashboard, onboarding, scanner results, zombie killer, A/B test) served as static files from FastAPI at `/`
