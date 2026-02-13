@@ -12,11 +12,9 @@ Flow:
 
 import asyncio
 import logging
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from sqlalchemy.ext.asyncio import AsyncSession
-
-logger = logging.getLogger(__name__)
 
 from flipflow.core.config import FlipFlowConfig
 from flipflow.core.constants import ListingStatus, ZombieAction
@@ -24,6 +22,8 @@ from flipflow.core.models.listing import Listing
 from flipflow.core.models.zombie_record import ZombieRecord
 from flipflow.core.protocols.ebay_gateway import EbayGateway
 from flipflow.core.schemas.analytics import ResurrectionResult
+
+logger = logging.getLogger(__name__)
 
 
 class Resurrector:
@@ -98,7 +98,7 @@ class Resurrector:
             return self._fail(listing, cycle, f"Failed to publish offer: {e}")
 
         # Step 6: Update local DB
-        now = datetime.now(timezone.utc)
+        now = datetime.now(UTC)
         listing.sku = new_sku
         listing.ebay_item_id = new_item_id
         listing.offer_id = offer_id

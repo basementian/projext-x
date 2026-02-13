@@ -5,9 +5,9 @@ from pydantic import BaseModel, Field
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from flipflow.api.dependencies import get_db, get_config
-from flipflow.core.models.listing import Listing
+from flipflow.api.dependencies import get_config, get_db
 from flipflow.core.config import FlipFlowConfig
+from flipflow.core.models.listing import Listing
 from flipflow.core.schemas.profit import ProfitCalcRequest
 from flipflow.core.schemas.title import TitleSanitizeRequest
 from flipflow.core.services.gatekeeper.profit_floor import ProfitFloorCalc

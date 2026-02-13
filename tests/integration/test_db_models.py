@@ -1,17 +1,15 @@
 """Integration tests for database models."""
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 import pytest
 
 from flipflow.core.models import (
+    JobLog,
     Listing,
     ListingSnapshot,
     QueueEntry,
     ZombieRecord,
-    Campaign,
-    ProfitRecord,
-    JobLog,
 )
 from flipflow.infrastructure.database.repository import Repository
 
@@ -108,7 +106,7 @@ class TestRelationships:
 
         record = ZombieRecord(
             listing_id=listing.id,
-            detected_at=datetime.now(timezone.utc),
+            detected_at=datetime.now(UTC),
             days_active_at_detection=65,
             views_at_detection=3,
             action_taken="flagged",
@@ -159,7 +157,7 @@ class TestJobLog:
         log = JobLog(
             job_name="zombie_scan",
             job_type="zombie_scan",
-            started_at=datetime.now(timezone.utc),
+            started_at=datetime.now(UTC),
             status="running",
         )
         await repo.create(log)

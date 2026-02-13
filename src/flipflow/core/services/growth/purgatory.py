@@ -11,17 +11,17 @@ Logic: If zombie_cycle_count > 3:
 
 import logging
 
-from flipflow.core.config import FlipFlowConfig
-from flipflow.core.constants import ListingStatus
-
-logger = logging.getLogger(__name__)
-from flipflow.core.models.listing import Listing
-from flipflow.core.protocols.ebay_gateway import EbayGateway
-from flipflow.core.services.gatekeeper.profit_floor import ProfitFloorCalc
-from flipflow.core.schemas.profit import ProfitCalcRequest
-
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+
+from flipflow.core.config import FlipFlowConfig
+from flipflow.core.constants import ListingStatus
+from flipflow.core.models.listing import Listing
+from flipflow.core.protocols.ebay_gateway import EbayGateway
+from flipflow.core.schemas.profit import ProfitCalcRequest
+from flipflow.core.services.gatekeeper.profit_floor import ProfitFloorCalc
+
+logger = logging.getLogger(__name__)
 
 
 class Purgatory:
@@ -117,7 +117,9 @@ class Purgatory:
             "break_even_price": round(break_even, 2),
             "markdown_price": markdown,
             "sale_percent": self.sale_percent,
-            "estimated_loss": round(abs(profit_result.net_profit), 2) if profit_result.net_profit < 0 else 0,
+            "estimated_loss": (
+                round(abs(profit_result.net_profit), 2) if profit_result.net_profit < 0 else 0
+            ),
             "suggestion": "Will suggest Donate/Trash if unsold in 7 days",
         }
 

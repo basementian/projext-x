@@ -8,8 +8,8 @@ from rich.table import Table
 
 from flipflow.core.config import FlipFlowConfig
 from flipflow.core.services.lifecycle.smart_queue import SmartQueue
-from flipflow.infrastructure.ebay_mock.mock_client import MockEbayClient
 from flipflow.infrastructure.database.session import create_session_factory
+from flipflow.infrastructure.ebay_mock.mock_client import MockEbayClient
 
 console = Console()
 

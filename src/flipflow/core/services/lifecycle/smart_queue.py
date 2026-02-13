@@ -9,19 +9,19 @@ during the configurable surge window.
 
 import logging
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 import pytz
-from sqlalchemy import select, func
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
-
-logger = logging.getLogger(__name__)
 
 from flipflow.core.config import FlipFlowConfig
 from flipflow.core.constants import ListingStatus, QueueStatus
 from flipflow.core.models.listing import Listing
 from flipflow.core.models.queue_entry import QueueEntry
 from flipflow.core.protocols.ebay_gateway import EbayGateway
+
+logger = logging.getLogger(__name__)
 
 
 class SmartQueue:
@@ -77,7 +77,7 @@ class SmartQueue:
             return entries
 
         batch_id = uuid.uuid4().hex[:12]
-        now = datetime.now(timezone.utc)
+        now = datetime.now(UTC)
         released = []
 
         for entry in entries:
@@ -138,7 +138,7 @@ class SmartQueue:
 
     async def get_queue_status(self, db: AsyncSession) -> dict:
         """Get counts and summary of queue state."""
-        today = datetime.now(timezone.utc).date()
+        today = datetime.now(UTC).date()
 
         # Count by status
         stmt = select(QueueEntry.status, func.count()).group_by(QueueEntry.status)

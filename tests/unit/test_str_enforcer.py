@@ -2,7 +2,6 @@
 
 import pytest
 
-from flipflow.core.config import FlipFlowConfig
 from flipflow.core.exceptions import LowSTRError
 from flipflow.core.services.gatekeeper.str_enforcer import STREnforcer
 

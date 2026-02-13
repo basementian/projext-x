@@ -6,9 +6,9 @@ import httpx
 import pytest
 
 from flipflow.core.config import FlipFlowConfig
+from flipflow.infrastructure.ebay.http_client import EbayHttpClient
 from flipflow.infrastructure.ebay.rate_limiter import EbayRateLimiter
 from flipflow.infrastructure.ebay.token_manager import EbayTokenManager, TokenData
-from flipflow.infrastructure.ebay.http_client import EbayHttpClient
 
 
 def make_token_response(

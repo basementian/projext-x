@@ -9,8 +9,6 @@ from flipflow.core.exceptions import EbayAuthError
 from flipflow.infrastructure.ebay.token_manager import (
     EbayTokenManager,
     TokenData,
-    SELLER_SCOPES,
-    APP_SCOPE,
 )
 from tests.unit.test_ebay_client.conftest import make_token_response
 

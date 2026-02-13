@@ -9,12 +9,10 @@ Does NOT increment zombie_cycle_count — this is preventive, not reactive.
 """
 
 import logging
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-
-logger = logging.getLogger(__name__)
 
 from flipflow.core.config import FlipFlowConfig
 from flipflow.core.constants import ListingStatus, RelistAction
@@ -22,6 +20,8 @@ from flipflow.core.models.listing import Listing
 from flipflow.core.models.zombie_record import ZombieRecord
 from flipflow.core.protocols.ebay_gateway import EbayGateway
 from flipflow.core.services.lifecycle.resurrector import Resurrector
+
+logger = logging.getLogger(__name__)
 
 
 class AutoRelister:
@@ -94,11 +94,11 @@ class AutoRelister:
             # Track as preventive relist
             record = ZombieRecord(
                 listing_id=listing.id,
-                detected_at=datetime.now(timezone.utc),
+                detected_at=datetime.now(UTC),
                 days_active_at_detection=listing.days_active,
                 views_at_detection=listing.total_views,
                 action_taken=RelistAction.PREVENTIVE_RELIST,
-                resurrected_at=datetime.now(timezone.utc),
+                resurrected_at=datetime.now(UTC),
                 old_item_id=old_item_id,
                 new_item_id=res.new_item_id,
                 cycle_number=0,

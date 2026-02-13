@@ -7,18 +7,18 @@ Competitors like MyListerHub use tiered thresholds. FlipFlow now matches that.
 """
 
 import logging
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
-from sqlalchemy import select, and_
+from sqlalchemy import and_, select
 from sqlalchemy.ext.asyncio import AsyncSession
-
-logger = logging.getLogger(__name__)
 
 from flipflow.core.config import FlipFlowConfig
 from flipflow.core.constants import ListingStatus, OfferAction, OfferStatus
 from flipflow.core.models.listing import Listing
 from flipflow.core.models.offer_record import OfferRecord
 from flipflow.core.protocols.ebay_gateway import EbayGateway
+
+logger = logging.getLogger(__name__)
 
 
 def _parse_tiers(tiers_str: str) -> list[tuple[int, float]]:
@@ -64,7 +64,7 @@ class OfferSniper:
         self, db: AsyncSession, listing_id: int, buyer_id: str,
     ) -> bool:
         """Check if an offer was sent to this specific buyer in the last 24 hours."""
-        cutoff = datetime.now(timezone.utc) - timedelta(hours=24)
+        cutoff = datetime.now(UTC) - timedelta(hours=24)
         stmt = select(OfferRecord).where(
             and_(
                 OfferRecord.listing_id == listing_id,
@@ -117,7 +117,9 @@ class OfferSniper:
                             {
                                 "price": offer_price,
                                 "currency": "USD",
-                                "message": f"Special offer: ${offer_price:.2f} ({discount_pct:.0f}% off)!",
+                                "message": (
+                                    f"Special offer: ${offer_price:.2f} ({discount_pct:.0f}% off)!"
+                                ),
                             },
                         )
                         offers_sent += 1
@@ -128,7 +130,7 @@ class OfferSniper:
                             buyer_id=buyer_id,
                             offer_price=offer_price,
                             discount_percent=discount_pct,
-                            sent_at=datetime.now(timezone.utc),
+                            sent_at=datetime.now(UTC),
                             status=OfferStatus.SENT,
                         )
                         db.add(record)
@@ -143,7 +145,8 @@ class OfferSniper:
                             "days_active": listing.days_active,
                         })
                     except Exception as e:
-                        logger.error("Failed to send offer for listing %d to %s: %s", listing.id, buyer_id, e)
+                        logger.error("Failed to send offer for listing %d to %s: %s",
+                                     listing.id, buyer_id, e)
                         errors += 1
 
             except Exception as e:
@@ -205,7 +208,7 @@ class OfferSniper:
             buyer_id=buyer_id,
             offer_price=offer_amount,
             discount_percent=round((1 - ratio) * 100, 2),
-            sent_at=datetime.now(timezone.utc),
+            sent_at=datetime.now(UTC),
             status=status,
         )
         db.add(record)

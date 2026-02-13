@@ -1,16 +1,15 @@
 """Tests for Offer Sniper V2 — tiered offers, per-watcher cooldown, inbound handling."""
 
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 import pytest
+from sqlalchemy import select
 
 from flipflow.core.constants import ListingStatus, OfferAction, OfferStatus
 from flipflow.core.models.listing import Listing
 from flipflow.core.models.offer_record import OfferRecord
 from flipflow.core.services.growth.offer_sniper import OfferSniper, _parse_tiers
 from flipflow.infrastructure.ebay_mock.mock_client import MockEbayClient
-
-from sqlalchemy import select
 
 
 @pytest.fixture
@@ -153,7 +152,7 @@ class TestScanAndSnipe:
             buyer_id="BUYER-1",
             offer_price=47.5,
             discount_percent=5.0,
-            sent_at=datetime.now(timezone.utc) - timedelta(hours=12),
+            sent_at=datetime.now(UTC) - timedelta(hours=12),
             status=OfferStatus.SENT,
         )
         db_session.add(record)
@@ -180,7 +179,7 @@ class TestScanAndSnipe:
             buyer_id="BUYER-1",
             offer_price=47.5,
             discount_percent=5.0,
-            sent_at=datetime.now(timezone.utc) - timedelta(hours=25),
+            sent_at=datetime.now(UTC) - timedelta(hours=25),
             status=OfferStatus.SENT,
         )
         db_session.add(record)

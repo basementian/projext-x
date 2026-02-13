@@ -3,10 +3,10 @@
 import json
 from datetime import datetime
 
-from sqlalchemy import Integer, Numeric, String, Text, DateTime
+from sqlalchemy import DateTime, Integer, Numeric, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from flipflow.core.models.base import Base, TimestampMixin, SoftDeleteMixin
+from flipflow.core.models.base import Base, SoftDeleteMixin, TimestampMixin
 
 
 class Listing(Base, TimestampMixin, SoftDeleteMixin):

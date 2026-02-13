@@ -6,18 +6,18 @@ Standard campaign at 1.5% CPS for all new listings, runs for 14 days.
 """
 
 import logging
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-
-logger = logging.getLogger(__name__)
 
 from flipflow.core.config import FlipFlowConfig
 from flipflow.core.constants import CampaignStatus, CampaignType, ListingStatus
 from flipflow.core.models.campaign import Campaign
 from flipflow.core.models.listing import Listing
 from flipflow.core.protocols.ebay_gateway import EbayGateway
+
+logger = logging.getLogger(__name__)
 
 
 class Kickstarter:
@@ -57,7 +57,7 @@ class Kickstarter:
         if existing:
             return {"success": False, "error": "Active campaign already exists"}
 
-        now = datetime.now(timezone.utc)
+        now = datetime.now(UTC)
         ends_at = now + timedelta(days=self.duration_days)
 
         try:
@@ -99,7 +99,7 @@ class Kickstarter:
 
         Should be run daily via scheduler.
         """
-        now = datetime.now(timezone.utc)
+        now = datetime.now(UTC)
         stmt = select(Campaign).where(
             Campaign.status == CampaignStatus.ACTIVE,
             Campaign.ends_at <= now,
@@ -126,5 +126,6 @@ class Kickstarter:
                 errors += 1
 
         await db.flush()
-        logger.info("Kickstarter cleanup: %d expired, %d ended, %d errors", len(expired), ended, errors)
+        logger.info("Kickstarter cleanup: %d expired, %d ended, %d errors",
+                    len(expired), ended, errors)
         return {"expired_found": len(expired), "ended": ended, "errors": errors}

@@ -3,9 +3,9 @@
 import pytest
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
-from flipflow.core.config import FlipFlowConfig
-from flipflow.core.models import Base  # noqa: F401 — importing triggers all model registration
 import flipflow.core.models  # noqa: F401 — ensure all models are loaded for metadata.create_all
+from flipflow.core.config import FlipFlowConfig
+from flipflow.core.models import Base
 from flipflow.infrastructure.ebay_mock.mock_client import MockEbayClient
 
 

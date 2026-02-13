@@ -7,7 +7,6 @@ import httpx
 
 from flipflow.core.exceptions import EbayAuthError
 
-
 SELLER_SCOPES = (
     "https://api.ebay.com/oauth/api_scope/sell.inventory "
     "https://api.ebay.com/oauth/api_scope/sell.marketing "

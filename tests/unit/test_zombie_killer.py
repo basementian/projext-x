@@ -2,11 +2,9 @@
 
 import pytest
 
-from flipflow.core.config import FlipFlowConfig
 from flipflow.core.constants import ListingStatus
 from flipflow.core.models.listing import Listing
 from flipflow.core.services.lifecycle.zombie_killer import ZombieKiller
-from flipflow.infrastructure.ebay_mock.mock_client import MockEbayClient
 
 
 @pytest.fixture

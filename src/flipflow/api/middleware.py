@@ -1,6 +1,7 @@
 """API middleware — authentication and security."""
 
 import logging
+
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
 from starlette.responses import JSONResponse
@@ -24,7 +25,8 @@ class ApiKeyMiddleware(BaseHTTPMiddleware):
 
         provided = request.headers.get("X-API-Key")
         if not provided or provided != self.api_key:
-            logger.warning("Unauthorized request to %s from %s", request.url.path, request.client.host if request.client else "unknown")
+            client_host = request.client.host if request.client else "unknown"
+            logger.warning("Unauthorized request to %s from %s", request.url.path, client_host)
             return JSONResponse(
                 status_code=401,
                 content={"detail": "Invalid or missing API key"},

@@ -1,7 +1,6 @@
 """Tests for eBay Offer endpoints."""
 
 import httpx
-import pytest
 
 from flipflow.infrastructure.ebay.endpoints.offers import OfferEndpoints
 from tests.unit.test_ebay_client.conftest import build_http_client

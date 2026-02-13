@@ -3,10 +3,10 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from flipflow.api.dependencies import get_db, get_config, get_ebay
+from flipflow.api.dependencies import get_config, get_db, get_ebay
 from flipflow.core.config import FlipFlowConfig
-from flipflow.core.services.lifecycle.zombie_killer import ZombieKiller
 from flipflow.core.services.lifecycle.resurrector import Resurrector
+from flipflow.core.services.lifecycle.zombie_killer import ZombieKiller
 
 router = APIRouter()
 

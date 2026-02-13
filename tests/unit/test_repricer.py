@@ -1,6 +1,5 @@
 """Tests for Graduated Repricer — time-based markdown ladder."""
 
-from datetime import datetime, timezone
 
 import pytest
 

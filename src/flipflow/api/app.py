@@ -6,11 +6,11 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from flipflow.api.routers import health, listings, offers, queue, relister, repricer, zombies
 from flipflow.core.config import FlipFlowConfig
 from flipflow.core.logging_config import setup_logging
-from flipflow.infrastructure.database.session import create_engine
 from flipflow.core.models.base import Base
-from flipflow.api.routers import health, listings, zombies, queue, repricer, relister, offers
+from flipflow.infrastructure.database.session import create_engine
 
 logger = logging.getLogger(__name__)
 

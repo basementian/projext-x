@@ -7,10 +7,10 @@ from rich.console import Console
 from rich.table import Table
 
 from flipflow.core.config import FlipFlowConfig
-from flipflow.core.services.lifecycle.zombie_killer import ZombieKiller
 from flipflow.core.services.lifecycle.resurrector import Resurrector
-from flipflow.infrastructure.ebay_mock.mock_client import MockEbayClient
+from flipflow.core.services.lifecycle.zombie_killer import ZombieKiller
 from flipflow.infrastructure.database.session import create_session_factory
+from flipflow.infrastructure.ebay_mock.mock_client import MockEbayClient
 
 console = Console()
 
@@ -76,7 +76,7 @@ def resurrect(
     result = asyncio.run(_run_resurrect(listing_id))
 
     if result.success:
-        console.print(f"[green bold]Resurrected![/]")
+        console.print("[green bold]Resurrected![/]")
         console.print(f"  Old Item ID: {result.old_item_id}")
         console.print(f"  New Item ID: {result.new_item_id}")
         console.print(f"  New SKU:     {result.sku}")

@@ -13,11 +13,11 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from flipflow.core.config import FlipFlowConfig
-
-logger = logging.getLogger(__name__)
 from flipflow.core.constants import ListingStatus
 from flipflow.core.models.listing import Listing
 from flipflow.core.protocols.ebay_gateway import EbayGateway
+
+logger = logging.getLogger(__name__)
 
 
 class StorePulse:

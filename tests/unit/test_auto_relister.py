@@ -1,14 +1,13 @@
 """Tests for Auto Relister — proactive scheduled relisting."""
 
 import pytest
+from sqlalchemy import select
 
 from flipflow.core.constants import ListingStatus, RelistAction
 from flipflow.core.models.listing import Listing
 from flipflow.core.models.zombie_record import ZombieRecord
 from flipflow.core.services.lifecycle.auto_relister import AutoRelister
 from flipflow.infrastructure.ebay_mock.mock_client import MockEbayClient
-
-from sqlalchemy import select
 
 
 @pytest.fixture

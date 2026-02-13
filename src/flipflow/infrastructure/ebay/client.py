@@ -1,16 +1,16 @@
 """Real eBay client — implements EbayGateway using live eBay REST APIs."""
 
 from flipflow.core.config import FlipFlowConfig
+from flipflow.infrastructure.ebay.endpoints.account import AccountEndpoints
+from flipflow.infrastructure.ebay.endpoints.analytics import AnalyticsEndpoints
+from flipflow.infrastructure.ebay.endpoints.browse import BrowseEndpoints
+from flipflow.infrastructure.ebay.endpoints.inventory import InventoryEndpoints
+from flipflow.infrastructure.ebay.endpoints.marketing import MarketingEndpoints
+from flipflow.infrastructure.ebay.endpoints.negotiation import NegotiationEndpoints
+from flipflow.infrastructure.ebay.endpoints.offers import OfferEndpoints
 from flipflow.infrastructure.ebay.http_client import EbayHttpClient
 from flipflow.infrastructure.ebay.rate_limiter import EbayRateLimiter
 from flipflow.infrastructure.ebay.token_manager import EbayTokenManager
-from flipflow.infrastructure.ebay.endpoints.inventory import InventoryEndpoints
-from flipflow.infrastructure.ebay.endpoints.offers import OfferEndpoints
-from flipflow.infrastructure.ebay.endpoints.analytics import AnalyticsEndpoints
-from flipflow.infrastructure.ebay.endpoints.marketing import MarketingEndpoints
-from flipflow.infrastructure.ebay.endpoints.browse import BrowseEndpoints
-from flipflow.infrastructure.ebay.endpoints.negotiation import NegotiationEndpoints
-from flipflow.infrastructure.ebay.endpoints.account import AccountEndpoints
 
 
 class RealEbayClient:

@@ -12,8 +12,8 @@ app = typer.Typer(
 # Command groups
 from flipflow.cli.commands import listings as listings_cmd
 from flipflow.cli.commands import profit as profit_cmd
-from flipflow.cli.commands import zombies as zombies_cmd
 from flipflow.cli.commands import queue as queue_cmd
+from flipflow.cli.commands import zombies as zombies_cmd
 
 listings_app = typer.Typer(help="Listing management and validation")
 zombies_app = typer.Typer(help="Zombie detection and resurrection")

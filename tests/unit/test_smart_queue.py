@@ -2,15 +2,13 @@
 
 from datetime import datetime
 
-import pytz
 import pytest
+import pytz
 
-from flipflow.core.config import FlipFlowConfig
 from flipflow.core.constants import ListingStatus, QueueStatus
 from flipflow.core.models.listing import Listing
 from flipflow.core.models.queue_entry import QueueEntry
 from flipflow.core.services.lifecycle.smart_queue import SmartQueue
-from flipflow.infrastructure.ebay_mock.mock_client import MockEbayClient
 
 
 @pytest.fixture

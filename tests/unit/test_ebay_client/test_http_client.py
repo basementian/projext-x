@@ -9,9 +9,8 @@ from flipflow.core.exceptions import (
     EbayAuthError,
     EbayError,
     EbayNotFoundError,
-    EbayRateLimitError,
 )
-from flipflow.infrastructure.ebay.http_client import EbayHttpClient, BASE_URLS
+from flipflow.infrastructure.ebay.http_client import BASE_URLS, EbayHttpClient
 from flipflow.infrastructure.ebay.rate_limiter import EbayRateLimiter
 from flipflow.infrastructure.ebay.token_manager import EbayTokenManager, TokenData
 

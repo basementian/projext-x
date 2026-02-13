@@ -1,7 +1,6 @@
 """Tests for eBay Inventory endpoints."""
 
 import httpx
-import pytest
 
 from flipflow.infrastructure.ebay.endpoints.inventory import InventoryEndpoints
 from tests.unit.test_ebay_client.conftest import build_http_client

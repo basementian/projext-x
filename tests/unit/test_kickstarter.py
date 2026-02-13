@@ -1,6 +1,6 @@
 """Tests for Kickstarter — auto-promote new listings."""
 
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 import pytest
 
@@ -102,7 +102,7 @@ class TestPromoteNewListing:
         result = await kickstarter.promote_new_listing(db_session, listing.id)
         ends_at = datetime.fromisoformat(result["ends_at"])
         # Should be roughly 14 days from now
-        expected = datetime.now(timezone.utc) + timedelta(days=14)
+        expected = datetime.now(UTC) + timedelta(days=14)
         delta = abs((ends_at - expected).total_seconds())
         assert delta < 60  # Within a minute
 
@@ -114,7 +114,7 @@ class TestCleanupExpired:
         await db_session.flush()
 
         # Create an expired campaign
-        past = datetime.now(timezone.utc) - timedelta(days=1)
+        past = datetime.now(UTC) - timedelta(days=1)
         campaign = Campaign(
             listing_id=listing.id,
             ebay_campaign_id="CAMP-expired",
@@ -143,12 +143,12 @@ class TestCleanupExpired:
         db_session.add(listing)
         await db_session.flush()
 
-        future = datetime.now(timezone.utc) + timedelta(days=7)
+        future = datetime.now(UTC) + timedelta(days=7)
         campaign = Campaign(
             listing_id=listing.id,
             campaign_type=CampaignType.KICKSTARTER,
             ad_rate_percent=1.5,
-            started_at=datetime.now(timezone.utc),
+            started_at=datetime.now(UTC),
             ends_at=future,
             status=CampaignStatus.ACTIVE,
         )

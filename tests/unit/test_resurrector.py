@@ -2,11 +2,9 @@
 
 import pytest
 
-from flipflow.core.config import FlipFlowConfig
 from flipflow.core.constants import ListingStatus
 from flipflow.core.models.listing import Listing
 from flipflow.core.services.lifecycle.resurrector import Resurrector
-from flipflow.infrastructure.ebay_mock.mock_client import MockEbayClient
 
 
 @pytest.fixture
@@ -121,8 +119,9 @@ class TestResurrection:
 
         await resurrector.resurrect(db_session, listing.id)
 
-        from flipflow.core.models.zombie_record import ZombieRecord
         from sqlalchemy import select
+
+        from flipflow.core.models.zombie_record import ZombieRecord
         stmt = select(ZombieRecord).where(ZombieRecord.listing_id == listing.id)
         result = await db_session.execute(stmt)
         records = list(result.scalars().all())

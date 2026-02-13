@@ -9,18 +9,18 @@ Never drops below ProfitFloorCalc.find_minimum_price() — the profit floor is t
 """
 
 import logging
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-
-logger = logging.getLogger(__name__)
 
 from flipflow.core.config import FlipFlowConfig
 from flipflow.core.constants import ListingStatus
 from flipflow.core.models.listing import Listing
 from flipflow.core.protocols.ebay_gateway import EbayGateway
 from flipflow.core.services.gatekeeper.profit_floor import ProfitFloorCalc
+
+logger = logging.getLogger(__name__)
 
 
 def _parse_steps(steps_str: str) -> list[tuple[int, float]]:
@@ -115,7 +115,7 @@ class Repricer:
                 continue
 
             listing.current_price = reprice["new_price"]
-            listing.last_repriced_at = datetime.now(timezone.utc)
+            listing.last_repriced_at = datetime.now(UTC)
             repriced.append(reprice)
 
             if listing.sku:

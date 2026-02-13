@@ -4,10 +4,10 @@ import pytest
 from httpx import ASGITransport, AsyncClient
 from sqlalchemy.ext.asyncio import create_async_engine
 
+import flipflow.core.models  # noqa: F401
 from flipflow.api.app import create_app
 from flipflow.core.config import FlipFlowConfig
 from flipflow.core.models.base import Base
-import flipflow.core.models  # noqa: F401
 
 TEST_API_KEY = "test-secret-key-12345"
 

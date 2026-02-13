@@ -1,6 +1,6 @@
 """Profit record model — tracks profit calculations per sale."""
 
-from sqlalchemy import Boolean, ForeignKey, Integer, Numeric
+from sqlalchemy import Boolean, ForeignKey, Numeric
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from flipflow.core.models.base import Base, TimestampMixin

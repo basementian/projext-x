@@ -3,7 +3,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from flipflow.api.dependencies import get_db, get_config, get_ebay
+from flipflow.api.dependencies import get_config, get_db, get_ebay
 from flipflow.core.config import FlipFlowConfig
 from flipflow.core.services.lifecycle.repricer import Repricer
 
