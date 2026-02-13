@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>STR Scanner Results</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#136dec",
+                        "primary-hover": "#0e5bc7",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101822",
+                        "surface-dark": "#1a2432",
+                        "success": "#22c55e",
+                        "warning": "#eab308",
+                        "danger": "#ef4444",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .gauge-arc {
+            stroke-dasharray: 283; /* 2 * PI * 45 */
+            stroke-dashoffset: 42; /* 283 - (283 * 0.85) for 85% */
+            transition: stroke-dashoffset 1s ease-in-out;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen flex flex-col font-display antialiased selection:bg-primary selection:text-white">
+<!-- Mobile Container -->
+<div class="mx-auto w-full max-w-md min-h-screen flex flex-col relative bg-white dark:bg-background-dark shadow-2xl overflow-hidden">
+<!-- Header -->
+<header class="flex items-center justify-between px-4 py-4 z-10">
+<button class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-600 dark:text-slate-400">
+<span class="material-icons-round text-2xl">arrow_back</span>
+</button>
+<h1 class="text-base font-semibold tracking-wide uppercase text-slate-500 dark:text-slate-400">Scan Results</h1>
+<button class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-600 dark:text-slate-400">
+<span class="material-icons-round text-2xl">history</span>
+</button>
+</header>
+<!-- Main Scrollable Content -->
+<main class="flex-1 overflow-y-auto px-5 pb-24">
+<!-- Product Identification -->
+<div class="flex items-start gap-4 mb-6 mt-2">
+<div class="relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-slate-200 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+<img alt="Red Nike Sneaker Side View" class="w-full h-full object-cover" data-alt="Red Nike Sneaker Side View" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMSHdgE4nNTgy248USegnlFU9EoI-0IQ4lgp_OWipl5bbpsvA91biTN8kyMn4ZZONtT00ImThvA3PL-iia1IBWXqi3SfyXOjMtI7YGLjJ6b-2SGe9-w2q8nZ6RIJ3iyRYZl8LtXJnNtbGmQRwiYLvR5OfLY0n-iTF_BKaMmsf0AZJvbTV7XXeBElnBZYIS3j5zp3xmFwjv7QdvgH-GD_eU_N8SMlRA_nXgR2RQPiz2ZL0eTUgMFCZmbOlv5AJc_34jdJ7mltOXQCY"/>
+</div>
+<div class="flex-1">
+<h2 class="text-sm font-medium text-slate-500 dark:text-slate-400 line-clamp-1">Nike Air Max 90 - Size 10M</h2>
+<p class="text-xs text-slate-400 dark:text-slate-500 mt-1">UPC: 193154238541</p>
+<div class="flex items-center gap-1 mt-1">
+<span class="w-2 h-2 rounded-full bg-success"></span>
+<span class="text-xs text-success font-medium">Data Fresh (Just now)</span>
+</div>
+</div>
+</div>
+<!-- Verdict Card -->
+<div class="relative rounded-2xl bg-gradient-to-br from-surface-dark to-background-dark border border-slate-200 dark:border-slate-800 shadow-lg p-6 mb-6 overflow-hidden">
+<!-- Background decorative glow -->
+<div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-success/10 blur-3xl pointer-events-none"></div>
+<div class="relative z-10 flex flex-col items-center text-center">
+<div class="inline-flex items-center justify-center p-3 mb-4 rounded-full bg-success/20 ring-1 ring-success/50 animate-pulse">
+<span class="material-icons-round text-success text-3xl">local_fire_department</span>
+</div>
+<h2 class="text-4xl font-black text-slate-900 dark:text-white tracking-tight mb-2">
+<span class="bg-clip-text text-transparent bg-gradient-to-r from-success to-emerald-400">STRONG BUY</span>
+</h2>
+<p class="text-sm text-slate-600 dark:text-slate-400 font-medium">
+                        High demand, low competition.
+                    </p>
+<!-- Confidence Score / AI Pill -->
+<div class="mt-5 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/20">
+<span class="material-icons-round text-primary text-xs">auto_awesome</span>
+<span class="text-xs font-semibold text-primary">AI Confidence: 98%</span>
+</div>
+</div>
+</div>
+<!-- Key Metrics Grid -->
+<div class="grid grid-cols-2 gap-4 mb-6">
+<!-- STR Card -->
+<div class="col-span-1 p-4 rounded-xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700/50 shadow-sm flex flex-col relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-16 h-16 bg-primary/5 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+<div class="flex items-center justify-between mb-2 z-10">
+<span class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Sell-Through</span>
+<span class="material-icons-round text-slate-300 dark:text-slate-600 text-sm">trending_up</span>
+</div>
+<div class="relative flex items-end gap-1 z-10 mt-auto">
+<span class="text-3xl font-bold text-slate-900 dark:text-white">85</span>
+<span class="text-lg font-bold text-primary mb-1">%</span>
+</div>
+<!-- Tiny STR Visual Bar -->
+<div class="w-full h-1.5 bg-slate-100 dark:bg-slate-700 rounded-full mt-3 overflow-hidden">
+<div class="h-full bg-success w-[85%] rounded-full"></div>
+</div>
+<p class="text-[10px] text-slate-400 mt-2">Excellent velocity</p>
+</div>
+<!-- Avg Price Card -->
+<div class="col-span-1 p-4 rounded-xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700/50 shadow-sm flex flex-col relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-16 h-16 bg-emerald-500/5 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+<div class="flex items-center justify-between mb-2 z-10">
+<span class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Avg Sold</span>
+<span class="material-icons-round text-slate-300 dark:text-slate-600 text-sm">attach_money</span>
+</div>
+<div class="relative flex items-end gap-1 z-10 mt-auto">
+<span class="text-3xl font-bold text-slate-900 dark:text-white">45</span>
+<span class="text-lg font-bold text-slate-500 dark:text-slate-400 mb-1">.00</span>
+</div>
+<p class="text-[10px] text-success mt-auto pt-2 flex items-center gap-1">
+<span class="material-icons-round text-[10px]">arrow_upward</span> +12% vs last mo
+                    </p>
+</div>
+<!-- Active Listings -->
+<div class="col-span-1 p-4 rounded-xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700/50 shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Active</span>
+<span class="material-icons-round text-slate-300 dark:text-slate-600 text-sm">storefront</span>
+</div>
+<div class="text-2xl font-bold text-slate-900 dark:text-white">12</div>
+<div class="text-[10px] text-slate-400 dark:text-slate-500 mt-1">Low competition</div>
+</div>
+<!-- Sold (90d) -->
+<div class="col-span-1 p-4 rounded-xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700/50 shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Sold (90d)</span>
+<span class="material-icons-round text-slate-300 dark:text-slate-600 text-sm">inventory_2</span>
+</div>
+<div class="text-2xl font-bold text-slate-900 dark:text-white">102</div>
+<div class="text-[10px] text-slate-400 dark:text-slate-500 mt-1">High volume</div>
+</div>
+</div>
+<!-- Historical Trend (Bonus Component for context) -->
+<div class="rounded-xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700/50 p-4 mb-6">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">90 Day Price Trend</h3>
+<span class="text-xs text-primary font-medium cursor-pointer">View Details</span>
+</div>
+<div class="flex items-end justify-between h-24 gap-2 w-full px-2">
+<!-- Fake Bars -->
+<div class="w-full bg-slate-100 dark:bg-slate-700/50 rounded-sm h-[40%] relative group">
+<div class="absolute inset-x-0 -top-8 hidden group-hover:flex justify-center">
+<span class="bg-slate-800 text-white text-[10px] px-1.5 py-0.5 rounded">$32</span>
+</div>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-700/50 rounded-sm h-[50%] relative group">
+<div class="absolute inset-x-0 -top-8 hidden group-hover:flex justify-center">
+<span class="bg-slate-800 text-white text-[10px] px-1.5 py-0.5 rounded">$38</span>
+</div>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-700/50 rounded-sm h-[45%] relative group">
+<div class="absolute inset-x-0 -top-8 hidden group-hover:flex justify-center">
+<span class="bg-slate-800 text-white text-[10px] px-1.5 py-0.5 rounded">$35</span>
+</div>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-700/50 rounded-sm h-[60%] relative group">
+<div class="absolute inset-x-0 -top-8 hidden group-hover:flex justify-center">
+<span class="bg-slate-800 text-white text-[10px] px-1.5 py-0.5 rounded">$41</span>
+</div>
+</div>
+<div class="w-full bg-primary/20 rounded-sm h-[75%] relative group">
+<div class="absolute inset-x-0 -top-8 hidden group-hover:flex justify-center">
+<span class="bg-slate-800 text-white text-[10px] px-1.5 py-0.5 rounded">$45</span>
+</div>
+</div>
+<div class="w-full bg-primary/40 rounded-sm h-[85%] relative group">
+<div class="absolute inset-x-0 -top-8 hidden group-hover:flex justify-center">
+<span class="bg-slate-800 text-white text-[10px] px-1.5 py-0.5 rounded">$48</span>
+</div>
+</div>
+<div class="w-full bg-primary rounded-sm h-[80%] relative group">
+<div class="absolute inset-x-0 -top-8 flex justify-center">
+<span class="bg-primary text-white text-[10px] px-1.5 py-0.5 rounded shadow-lg">$45</span>
+</div>
+</div>
+</div>
+<div class="flex justify-between mt-2 text-[10px] text-slate-400">
+<span>Oct</span>
+<span>Nov</span>
+<span>Dec</span>
+</div>
+</div>
+<!-- Comp Item Example (Bonus) -->
+<div class="rounded-xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700/50 p-4">
+<h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3">Recent Sold Comp</h3>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-slate-200 dark:bg-slate-800 flex-shrink-0 overflow-hidden">
+<img alt="Similar Nike Sneaker Small Thumbnail" class="w-full h-full object-cover opacity-80" data-alt="Similar Nike Sneaker Small Thumbnail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDrZ6OwtZd0iH0fX0AY6QKALKnrq3XDbSi6fufKs-DLqLW7YVjTP-FNpqfQPO9ByAxIGiYtjxMacLgbcTOb6ap4KH04JcbcoIqL1PBqgNxOwUmshxTgYb15C62a8e6B0_Ui29p_hjrkzKYBu_UX7EfLUM_mb-xbKaf4GpXve2l0kRt4kaMHdiPiPKDFfL7EqQEDxK8liPjcjkLPAjjmV8Jm3F2X1-J2-_1xwnUFbOuATq_dKcd7nuf_S4XxKJWYXwP6zHHKRY85qQ"/>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-xs text-slate-300 truncate">Nike Air Max 90 Essentials Wolf Grey...</p>
+<p class="text-[10px] text-slate-500">Sold 2 days ago</p>
+</div>
+<div class="text-sm font-bold text-white">$46.50</div>
+</div>
+</div>
+</main>
+<!-- Sticky Footer -->
+<footer class="absolute bottom-0 left-0 w-full p-4 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 z-20">
+<button class="w-full flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover text-white font-semibold py-4 rounded-xl shadow-lg shadow-primary/30 active:scale-[0.98] transition-all">
+<span class="material-icons-round text-xl">bookmark_add</span>
+<span>Save to Sourcing List</span>
+</button>
+</footer>
+</div>
+</body></html>

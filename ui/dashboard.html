@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Strategic Command Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#136dec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101822",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom Radial Progress for Health Score */
+        .radial-progress {
+            background: conic-gradient(from 0deg, #136dec 266.4deg, #1e293b 266.4deg);
+            border-radius: 50%;
+            position: relative;
+        }
+        .radial-progress::before {
+            content: "";
+            position: absolute;
+            inset: 12px;
+            background-color: #101822; /* Matches bg-background-dark */
+            border-radius: 50%;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-800 dark:text-slate-100 min-h-screen flex flex-col antialiased">
+<!-- Status Bar Spacer (iOS Safe Area) -->
+<div class="h-12 w-full bg-background-light dark:bg-background-dark shrink-0"></div>
+<!-- Header -->
+<header class="px-6 py-4 flex items-center justify-between shrink-0">
+<div>
+<h1 class="text-xl font-bold tracking-tight">Command Center</h1>
+<p class="text-xs text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider mt-0.5">Resale AI • v2.0</p>
+</div>
+<button class="relative p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors">
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-background-light dark:border-background-dark"></span>
+<img alt="User profile avatar" class="w-10 h-10 rounded-full object-cover border-2 border-slate-200 dark:border-slate-700" data-alt="User profile photo avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMlA9F9PyUQdQqiJxthSCSFsCBteZqein3Z8-1tyv2qTt_TreJr_eDEAGHChb6PTgaBi-c0zemJvNwZ2sBQ5majny-KM8QOrg4BZcU8_fgLdgD6SI6pq_nXOH7YtfnDPD_nVNMhJj8sYaEEBySJho64qKHl6i5WZactoZyhpkREXcLl3mort21YAsvzRJYauR4tWgtS6lkVZNr36jsDAN6APreqwErMHRSUx1PYU2QrVQr4oR4PrRlJj4r4fXo2gcgf0fhavzOWDY"/>
+</button>
+</header>
+<!-- Scrollable Content Area -->
+<main class="flex-1 overflow-y-auto px-6 pb-24">
+<!-- Inventory Health Score Hero -->
+<section class="mt-4 mb-8 flex flex-col items-center">
+<div class="relative w-48 h-48 radial-progress shadow-[0_0_30px_-5px_rgba(19,109,236,0.3)] flex items-center justify-center mb-4">
+<div class="relative z-10 flex flex-col items-center">
+<span class="text-5xl font-extrabold text-white">74%</span>
+<span class="text-xs text-primary font-semibold tracking-wide uppercase mt-1">Health Score</span>
+</div>
+<!-- Decorative glow behind -->
+<div class="absolute inset-0 rounded-full bg-primary/20 blur-xl -z-10"></div>
+</div>
+<div class="text-center max-w-xs mx-auto">
+<p class="text-sm text-slate-400">Your inventory velocity is outpacing <span class="text-white font-semibold">80% of peers</span>.</p>
+</div>
+</section>
+<!-- Action Alerts -->
+<section class="space-y-4 mb-8">
+<h2 class="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3">Priority Actions</h2>
+<!-- Zombie Listings Alert (Red/Warning) -->
+<div class="group relative overflow-hidden rounded-xl bg-slate-900 border border-red-500/30 p-5 shadow-lg">
+<div class="absolute inset-0 bg-gradient-to-r from-red-500/10 to-transparent opacity-50"></div>
+<div class="relative z-10 flex items-start gap-4">
+<div class="p-3 bg-red-500/20 rounded-lg text-red-500 shrink-0">
+<span class="material-icons text-xl">warning</span>
+</div>
+<div class="flex-1">
+<h3 class="font-bold text-white text-lg leading-tight">12 Zombie Listings</h3>
+<p class="text-sm text-slate-400 mt-1">Items unsold &gt; 90 days are hurting your STR.</p>
+<div class="mt-4 flex items-center justify-between">
+<span class="text-xs font-mono text-red-400 bg-red-500/10 px-2 py-1 rounded">High Priority</span>
+<button class="text-sm font-semibold text-white bg-red-600 hover:bg-red-500 px-4 py-2 rounded-lg transition-colors shadow-md shadow-red-900/20">
+                                Review Items
+                            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Pending Offers Alert (Primary Blue) -->
+<div class="group relative overflow-hidden rounded-xl bg-slate-900 border border-primary/30 p-5 shadow-lg">
+<div class="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent opacity-50"></div>
+<div class="relative z-10 flex items-start gap-4">
+<div class="p-3 bg-primary/20 rounded-lg text-primary shrink-0">
+<span class="material-icons text-xl">payments</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h3 class="font-bold text-white text-lg leading-tight">8 Pending Offers</h3>
+<span class="bg-primary text-white text-xs font-bold px-2 py-0.5 rounded-full">$450 Value</span>
+</div>
+<p class="text-sm text-slate-400 mt-1">4 offers expire in less than 2 hours.</p>
+<div class="mt-4 flex justify-end">
+<button class="text-sm font-semibold text-white bg-primary hover:bg-blue-600 px-4 py-2 rounded-lg transition-colors shadow-md shadow-blue-900/20 w-full text-center">
+                                Manage Offers
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Key Metrics Grid -->
+<section>
+<h2 class="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3">Performance</h2>
+<div class="grid grid-cols-2 gap-4">
+<!-- Revenue Velocity Card -->
+<div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50 backdrop-blur-sm">
+<div class="flex justify-between items-start mb-2">
+<span class="text-slate-400 text-xs font-medium">Rev Velocity</span>
+<span class="material-icons text-primary/50 text-base">trending_up</span>
+</div>
+<div class="text-2xl font-bold text-white mb-1">$1,240<span class="text-sm font-normal text-slate-500">/wk</span></div>
+<div class="flex items-center gap-1 text-emerald-400 text-xs font-semibold bg-emerald-400/10 w-fit px-1.5 py-0.5 rounded">
+<span class="material-icons" style="font-size: 12px;">arrow_upward</span>
+                        12%
+                    </div>
+</div>
+<!-- Avg STR Card -->
+<div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50 backdrop-blur-sm">
+<div class="flex justify-between items-start mb-2">
+<span class="text-slate-400 text-xs font-medium">Avg STR</span>
+<span class="material-icons text-primary/50 text-base">speed</span>
+</div>
+<div class="text-2xl font-bold text-white mb-1">45%</div>
+<div class="w-full bg-slate-700 rounded-full h-1.5 mt-2">
+<div class="bg-emerald-400 h-1.5 rounded-full" style="width: 45%"></div>
+</div>
+</div>
+</div>
+<!-- Additional Metric Row -->
+<div class="mt-4 bg-slate-800/50 rounded-xl p-4 border border-slate-700/50 backdrop-blur-sm flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-indigo-500/20 flex items-center justify-center text-indigo-400">
+<span class="material-icons text-lg">inventory_2</span>
+</div>
+<div>
+<div class="text-sm font-semibold text-white">Active Inventory</div>
+<div class="text-xs text-slate-400">Total listed value</div>
+</div>
+</div>
+<div class="text-right">
+<div class="text-lg font-bold text-white">1,402</div>
+<div class="text-xs text-indigo-400 font-medium">$42,850</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Floating Action Button for Scanning -->
+<div class="fixed bottom-24 right-6 z-20">
+<button class="bg-white text-primary rounded-full p-4 shadow-xl shadow-blue-900/30 flex items-center justify-center hover:scale-105 transition-transform">
+<span class="material-icons text-2xl">qr_code_scanner</span>
+</button>
+</div>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 w-full bg-slate-900/90 backdrop-blur-lg border-t border-slate-800 pb-6 pt-2 z-30">
+<div class="flex justify-around items-center px-2">
+<button class="flex flex-col items-center p-2 text-primary group">
+<span class="material-icons mb-1 group-hover:scale-110 transition-transform">dashboard</span>
+<span class="text-[10px] font-medium">Home</span>
+</button>
+<button class="flex flex-col items-center p-2 text-slate-500 hover:text-slate-300 transition-colors group">
+<span class="material-icons mb-1 group-hover:scale-110 transition-transform">list_alt</span>
+<span class="text-[10px] font-medium">Inventory</span>
+</button>
+<div class="w-12"></div> <!-- Spacer for FAB -->
+<button class="flex flex-col items-center p-2 text-slate-500 hover:text-slate-300 transition-colors group">
+<span class="material-icons mb-1 group-hover:scale-110 transition-transform">sell</span>
+<span class="text-[10px] font-medium">Sold</span>
+</button>
+<button class="flex flex-col items-center p-2 text-slate-500 hover:text-slate-300 transition-colors group">
+<span class="material-icons mb-1 group-hover:scale-110 transition-transform">insights</span>
+<span class="text-[10px] font-medium">Analytics</span>
+</button>
+</div>
+<!-- Background blob for FAB integration -->
+<div class="absolute bottom-[4.5rem] right-4 w-16 h-16 pointer-events-none"></div>
+</nav>
+</body></html>

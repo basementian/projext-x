@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FlipFlow — UI Screens</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#136dec",
+                    "background-dark": "#101822",
+                },
+                fontFamily: {
+                    "display": ["Inter"]
+                },
+                borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+            },
+        },
+    }
+</script>
+</head>
+<body class="bg-background-dark font-display text-white min-h-screen flex items-center justify-center">
+<div class="max-w-2xl w-full px-6 py-16">
+    <h1 class="text-3xl font-bold mb-2 tracking-tight">FlipFlow</h1>
+    <p class="text-gray-400 mb-10">Prototype screens — select a page to preview.</p>
+    <div class="grid gap-4">
+        <a href="/dashboard" class="block rounded-xl border border-white/10 bg-white/5 px-6 py-5 hover:bg-white/10 transition">
+            <div class="flex items-center gap-4">
+                <span class="material-symbols-outlined text-primary text-3xl">monitoring</span>
+                <div>
+                    <div class="font-semibold text-lg">Strategic Command Dashboard</div>
+                    <div class="text-sm text-gray-400">Portfolio health, revenue metrics, and AI recommendations</div>
+                </div>
+            </div>
+        </a>
+        <a href="/onboarding" class="block rounded-xl border border-white/10 bg-white/5 px-6 py-5 hover:bg-white/10 transition">
+            <div class="flex items-center gap-4">
+                <span class="material-symbols-outlined text-primary text-3xl">sync</span>
+                <div>
+                    <div class="font-semibold text-lg">Marketplace Sync Onboarding</div>
+                    <div class="text-sm text-gray-400">Connect eBay account, import listings, and configure sync</div>
+                </div>
+            </div>
+        </a>
+        <a href="/scanner-results" class="block rounded-xl border border-white/10 bg-white/5 px-6 py-5 hover:bg-white/10 transition">
+            <div class="flex items-center gap-4">
+                <span class="material-symbols-outlined text-primary text-3xl">search</span>
+                <div>
+                    <div class="font-semibold text-lg">STR Scanner Results</div>
+                    <div class="text-sm text-gray-400">Sell-through rate analysis and listing performance scanner</div>
+                </div>
+            </div>
+        </a>
+        <a href="/zombie-killer" class="block rounded-xl border border-white/10 bg-white/5 px-6 py-5 hover:bg-white/10 transition">
+            <div class="flex items-center gap-4">
+                <span class="material-symbols-outlined text-primary text-3xl">delete_sweep</span>
+                <div>
+                    <div class="font-semibold text-lg">Zombie Killer Automation</div>
+                    <div class="text-sm text-gray-400">Identify and manage stale zero-view listings</div>
+                </div>
+            </div>
+        </a>
+        <a href="/ab-test" class="block rounded-xl border border-white/10 bg-white/5 px-6 py-5 hover:bg-white/10 transition">
+            <div class="flex items-center gap-4">
+                <span class="material-symbols-outlined text-primary text-3xl">science</span>
+                <div>
+                    <div class="font-semibold text-lg">A/B Listing Test Setup</div>
+                    <div class="text-sm text-gray-400">Create and monitor split tests for listing optimization</div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <p class="text-gray-500 text-xs mt-10 text-center">API available at <a href="/api/v1/health" class="text-primary hover:underline">/api/v1/health</a></p>
+</div>
+</body>
+</html>

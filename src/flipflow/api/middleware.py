@@ -20,7 +20,8 @@ class ApiKeyMiddleware(BaseHTTPMiddleware):
         self.api_key = api_key
 
     async def dispatch(self, request: Request, call_next):
-        if request.url.path in PUBLIC_PATHS:
+        path = request.url.path
+        if path in PUBLIC_PATHS or not path.startswith("/api/"):
             return await call_next(request)
 
         provided = request.headers.get("X-API-Key")

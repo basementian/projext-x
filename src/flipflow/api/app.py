@@ -1,10 +1,12 @@
 """FastAPI application factory."""
 
 import logging
+import pathlib
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from flipflow.api.routers import health, listings, offers, queue, relister, repricer, zombies
 from flipflow.core.config import FlipFlowConfig
@@ -75,5 +77,10 @@ def create_app(config: FlipFlowConfig | None = None) -> FastAPI:
     app.include_router(repricer.router, prefix="/api/v1", tags=["repricer"])
     app.include_router(relister.router, prefix="/api/v1", tags=["relister"])
     app.include_router(offers.router, prefix="/api/v1", tags=["offers"])
+
+    # Serve UI static files (catch-all, must be after API routers)
+    ui_dir = pathlib.Path(__file__).resolve().parents[3] / "ui"
+    if ui_dir.is_dir():
+        app.mount("/", StaticFiles(directory=ui_dir, html=True), name="ui")
 
     return app

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Zombie Killer Automation</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#136dec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101822",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        .safe-area-bottom {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-50 min-h-screen flex flex-col overflow-hidden">
+<!-- Top Status Bar Area (Mock) -->
+<div class="flex justify-between items-center px-6 pt-3 pb-2 text-xs font-medium text-slate-400">
+<span>9:41</span>
+<div class="flex gap-1.5">
+<span class="material-icons-round text-base">signal_cellular_alt</span>
+<span class="material-icons-round text-base">wifi</span>
+<span class="material-icons-round text-base">battery_full</span>
+</div>
+</div>
+<!-- Header Section -->
+<header class="px-5 pt-4 pb-2 shrink-0 z-10 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-sm sticky top-0">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<button class="p-2 -ml-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors">
+<span class="material-icons-round text-slate-500 dark:text-slate-400">arrow_back</span>
+</button>
+<div>
+<h1 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
+                        Zombie Killer
+                        <span class="material-icons-outlined text-primary text-xl">dangerous</span>
+</h1>
+<p class="text-sm text-slate-500 dark:text-slate-400">12 stagnant listings found</p>
+</div>
+</div>
+<div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center border border-slate-300 dark:border-slate-700 overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="Portrait of a young woman looking confident" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCX7GFYX7owVqVT05jpLzLO14BV4VozCvO3V_OfXphtO3KwA1kQaMYoGSxzGD9xEF4sh45q2NqefmRMM2cj8349Xl8Sx-aoP1NUPVlnccdTsX3KIProlPAgBeqJCDfRTpgHUaVEqoaNBXjhncOEJ1FuZHhFNz6J4T09FEuMOq_7hxX9vXIe472OOzaZOMneWM0kHYGv4bO6osl8g5FpMc3RqW4xcS56FDGVaqD6IthaRc_wbSOIkcf4DJfxM8d9-rvZaB2a84H-IP0"/>
+</div>
+</div>
+<!-- Filters / Stats -->
+<div class="flex gap-3 overflow-x-auto pb-2 no-scrollbar">
+<button class="px-4 py-1.5 bg-primary text-white text-xs font-medium rounded-full whitespace-nowrap shadow-sm shadow-primary/20">
+                All Stale (12)
+            </button>
+<button class="px-4 py-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-xs font-medium rounded-full whitespace-nowrap">
+                Oldest First
+            </button>
+<button class="px-4 py-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-xs font-medium rounded-full whitespace-nowrap">
+                Zero Views
+            </button>
+</div>
+</header>
+<!-- Main Content: List -->
+<main class="flex-1 overflow-y-auto px-5 pt-2 pb-32 space-y-4">
+<!-- Selection Header -->
+<div class="flex justify-between items-center text-sm text-slate-500 dark:text-slate-400 px-1">
+<span>Listing Details</span>
+<button class="text-primary text-xs font-semibold hover:text-primary/80">Select All</button>
+</div>
+<!-- Item Card 1 -->
+<div class="group relative bg-white dark:bg-[#1e293b] rounded-xl p-3 shadow-sm border border-slate-100 dark:border-slate-700/50 flex gap-4 items-center">
+<!-- Checkbox -->
+<div class="shrink-0">
+<input checked="" class="w-5 h-5 text-primary bg-slate-100 border-slate-300 rounded focus:ring-primary dark:bg-slate-700 dark:border-slate-600 dark:focus:ring-offset-slate-800" type="checkbox"/>
+</div>
+<!-- Image -->
+<div class="shrink-0 w-20 h-20 rounded-lg bg-slate-100 dark:bg-slate-800 overflow-hidden relative">
+<img alt="Red Nike Sneaker" class="w-full h-full object-cover" data-alt="Side profile of a red nike sneaker on white background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOe5dhT2eG_v-j2_kxLIHMBWmmctqoL-4ONIsSux9HcVu7SfpTGm1u8ZWkZk8ee9mXLk-JLUbLbAmRgRDzt19JBndvIivdvk7kZHUYqDmNzEa3TOBMn7LWVccOwpHMIBbbQe8hk72Cm9eUR77Rzj9ApdoPvLcAnAq3LyJZRDsmuLeIVI3RXmNfp4U4u1x3bKNi_Y_nGvkfnc8COrVXalkLIgugN9Vhl35woiK9ZWARAZE3dmHtpt9FmMsNSuykmYTK7yFWfXdt7B8"/>
+<div class="absolute inset-0 bg-black/10 dark:bg-black/20"></div>
+</div>
+<!-- Content -->
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h3 class="font-semibold text-slate-900 dark:text-slate-100 truncate pr-2 text-sm leading-tight">Nike Air Max 90 - Size 10 Red/White</h3>
+<span class="text-xs font-bold text-slate-900 dark:text-white">$120</span>
+</div>
+<div class="mt-2 flex flex-wrap gap-2">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-medium bg-red-100 text-red-700 dark:bg-red-500/10 dark:text-red-400 border border-red-200 dark:border-red-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span>
+                        64 Days
+                    </span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300">
+<span class="material-icons-outlined text-[10px]">visibility</span>
+                        4 Views
+                    </span>
+</div>
+</div>
+</div>
+<!-- Item Card 2 -->
+<div class="group relative bg-white dark:bg-[#1e293b] rounded-xl p-3 shadow-sm border border-slate-100 dark:border-slate-700/50 flex gap-4 items-center">
+<div class="shrink-0">
+<input checked="" class="w-5 h-5 text-primary bg-slate-100 border-slate-300 rounded focus:ring-primary dark:bg-slate-700 dark:border-slate-600 dark:focus:ring-offset-slate-800" type="checkbox"/>
+</div>
+<div class="shrink-0 w-20 h-20 rounded-lg bg-slate-100 dark:bg-slate-800 overflow-hidden relative">
+<img alt="Vintage Denim Jacket" class="w-full h-full object-cover" data-alt="Close up of blue denim jacket texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAF4wK2KD2NojrpRwN1Jl-tc4frhI9BQZ4py2WfA73V6_pHMz4rsAbdeJ1UuMqkLzGus-rERD7TINXLLTDifZxsflq8uS9mbcFN1G1_YTY32Qh4M4W4v3qD_1B5X2pocxkhn1jEV4qLfaqETPWy00DMwVKmOr-KzbFOg6HgoMbE68p3Rb1qK2hnaVADGsb3DZ0SnTm6Fn838BUIoeBIQeRf4yOkVcaVRJGwj4ll7D-1p1-Pj72iLHI0DCei63aMW7HWS4zyGSgEbWo"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h3 class="font-semibold text-slate-900 dark:text-slate-100 truncate pr-2 text-sm leading-tight">Vintage Levi's Trucker Jacket - Medium</h3>
+<span class="text-xs font-bold text-slate-900 dark:text-white">$85</span>
+</div>
+<div class="mt-2 flex flex-wrap gap-2">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-medium bg-red-100 text-red-700 dark:bg-red-500/10 dark:text-red-400 border border-red-200 dark:border-red-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                        92 Days
+                    </span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300">
+<span class="material-icons-outlined text-[10px]">visibility</span>
+                        12 Views
+                    </span>
+</div>
+</div>
+</div>
+<!-- Item Card 3 -->
+<div class="group relative bg-white dark:bg-[#1e293b] rounded-xl p-3 shadow-sm border border-slate-100 dark:border-slate-700/50 flex gap-4 items-center">
+<div class="shrink-0">
+<input checked="" class="w-5 h-5 text-primary bg-slate-100 border-slate-300 rounded focus:ring-primary dark:bg-slate-700 dark:border-slate-600 dark:focus:ring-offset-slate-800" type="checkbox"/>
+</div>
+<div class="shrink-0 w-20 h-20 rounded-lg bg-slate-100 dark:bg-slate-800 overflow-hidden relative">
+<img alt="White Smart Watch" class="w-full h-full object-cover" data-alt="Product shot of a white smartwatch on a wrist" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRUe77tovL9s94mCjMMUZJhpp5yuSxcxImR-j2EH6W0_KFfURWWY4NqjKhX8-EtvNdi2IbLB0cmq3pqmB4GaNCf1FsLWD4YFTEI3Nfj5pfYe168-AH-qZ7tk4C37vjR6F8P7xTWmHQA02ZpaXBnuOSPkhhDNcpY1P2hpsWzf4ii100-ZiZddbp0QdRiuOcIDaR1DIFipk0l5yGlza2V4mhU8uRYkhV_OaTgcDTAWcF-f-OBB8a0etKQ0u5qPXT4jf_4YjyD0ubs-U"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h3 class="font-semibold text-slate-900 dark:text-slate-100 truncate pr-2 text-sm leading-tight">Apple Watch Series 5 - Silver Aluminum</h3>
+<span class="text-xs font-bold text-slate-900 dark:text-white">$150</span>
+</div>
+<div class="mt-2 flex flex-wrap gap-2">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-medium bg-orange-100 text-orange-700 dark:bg-orange-500/10 dark:text-orange-400 border border-orange-200 dark:border-orange-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+                        61 Days
+                    </span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300">
+<span class="material-icons-outlined text-[10px]">visibility</span>
+                        0 Views
+                    </span>
+</div>
+</div>
+</div>
+<!-- Item Card 4 -->
+<div class="group relative bg-white dark:bg-[#1e293b] rounded-xl p-3 shadow-sm border border-slate-100 dark:border-slate-700/50 flex gap-4 items-center">
+<div class="shrink-0">
+<input class="w-5 h-5 text-primary bg-slate-100 border-slate-300 rounded focus:ring-primary dark:bg-slate-700 dark:border-slate-600 dark:focus:ring-offset-slate-800" type="checkbox"/>
+</div>
+<div class="shrink-0 w-20 h-20 rounded-lg bg-slate-100 dark:bg-slate-800 overflow-hidden relative grayscale opacity-75">
+<img alt="Leather Backpack" class="w-full h-full object-cover" data-alt="Brown leather backpack sitting on a wooden stool" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqC8-MM_nTm_p0gfMCerZWEdNd23XIYngd-1i51ltM6OKeoOJlWM3pES4Ev7TJffOuFgXvkR_WV5yUMTha-WQwI_PjjOnePh72DUlu76N87rhauFM0CKq63-aksgz8747mlSJshkbaUSFU8e6-Y16YDuw3SW2fpf2NR8ywQdyyLdyazTenbHVkfE_z_a1_4gB1qlmzP5r2v15q_1ybqym_E4Uk0HOAvN0GmRyZ1mbHslRRbiXG9A034XhbrGamGJf-e-jPE7FPCDg"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h3 class="font-semibold text-slate-500 dark:text-slate-400 truncate pr-2 text-sm leading-tight">Fossil Leather Backpack - Cognac</h3>
+<span class="text-xs font-bold text-slate-500 dark:text-slate-400">$60</span>
+</div>
+<div class="mt-2 flex flex-wrap gap-2">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-500 border border-slate-200 dark:border-slate-700">
+                        75 Days
+                    </span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-500">
+<span class="material-icons-outlined text-[10px]">visibility</span>
+                        22 Views
+                    </span>
+</div>
+</div>
+</div>
+<!-- Item Card 5 -->
+<div class="group relative bg-white dark:bg-[#1e293b] rounded-xl p-3 shadow-sm border border-slate-100 dark:border-slate-700/50 flex gap-4 items-center">
+<div class="shrink-0">
+<input checked="" class="w-5 h-5 text-primary bg-slate-100 border-slate-300 rounded focus:ring-primary dark:bg-slate-700 dark:border-slate-600 dark:focus:ring-offset-slate-800" type="checkbox"/>
+</div>
+<div class="shrink-0 w-20 h-20 rounded-lg bg-slate-100 dark:bg-slate-800 overflow-hidden relative">
+<img alt="Vintage Camera" class="w-full h-full object-cover" data-alt="Front view of a vintage silver film camera" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1wIhM9htXbRcACnU4iqmWtOEn7eS7RIPDWFDcaF6RVag13cBfjpFBMvTlbC_R1WusjeajFVVMkjzCrodIxNq040X5OQHdzc9abIwcv4YMYe7cuAe4yYX0fyHZP38Go-P3scRC6b-8ZKq0q3jr2FCElx2zHehDFvVLr0JFeo1S9bi1ap_4NpD8MLT7uhC0O9GE5p3NLxMTP_3CA61zb03dkVXIx-1kmUh5-c_-OT2jfNbmMIHHw-3kU-854dlzjChjpsrGjc3xJo8"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h3 class="font-semibold text-slate-900 dark:text-slate-100 truncate pr-2 text-sm leading-tight">Canon AE-1 Program - Body Only</h3>
+<span class="text-xs font-bold text-slate-900 dark:text-white">$110</span>
+</div>
+<div class="mt-2 flex flex-wrap gap-2">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-medium bg-red-100 text-red-700 dark:bg-red-500/10 dark:text-red-400 border border-red-200 dark:border-red-500/20">
+<span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                        112 Days
+                    </span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300">
+<span class="material-icons-outlined text-[10px]">visibility</span>
+                        8 Views
+                    </span>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Action Area -->
+<div class="fixed bottom-0 left-0 right-0 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 p-5 safe-area-bottom z-50">
+<div class="flex flex-col gap-3">
+<div class="flex justify-between text-xs text-slate-500 dark:text-slate-400 px-1">
+<span>Selected: 4 items</span>
+<span>Potential value: $465.00</span>
+</div>
+<button class="w-full bg-primary hover:bg-blue-600 text-white font-semibold py-3.5 px-4 rounded-xl shadow-lg shadow-primary/30 flex items-center justify-center gap-2 transition-transform active:scale-[0.98]">
+<span class="material-icons-round text-xl">autorenew</span>
+<span>Relist 4 Items Now</span>
+</button>
+</div>
+</div>
+<!-- Toast Notification (Hidden by default, shown for demo structure) -->
+<div class="fixed top-24 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 translate-y-2 transition-all duration-300">
+<div class="bg-slate-800 text-white px-4 py-2 rounded-lg shadow-xl flex items-center gap-3 text-sm">
+<span class="material-icons-round text-green-400 text-base">check_circle</span>
+<span>Items relisted successfully</span>
+</div>
+</div>
+</body></html>
