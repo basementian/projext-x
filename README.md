@@ -38,7 +38,7 @@ GitHub Actions runs linting, tests, and type checking on pull requests and pushe
 
 ## Contributing
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md).
+See [CONTRIBUTING.md](./CONTRIBUTING.md). For the folder-by-folder 5-batch standardization plan, see [docs/ENGINEERING_STANDARDS.md](./docs/ENGINEERING_STANDARDS.md).
 
 ## Security
 

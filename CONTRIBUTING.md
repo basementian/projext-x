@@ -28,6 +28,13 @@ uv run pytest tests/ -v --tb=short
 uv run mypy src/flipflow/ --ignore-missing-imports
 ```
 
+## Standardization roadmap
+
+We maintain a folder-by-folder standardization roadmap in [`docs/ENGINEERING_STANDARDS.md`](./docs/ENGINEERING_STANDARDS.md).
+
+- Work is grouped into 5 batches so quality improvements can be rolled out incrementally.
+- When contributing inside a batch scope, follow that batch checklist and done criteria.
+
 ## Commit and PR guidance
 
 - Keep commits focused and small.
