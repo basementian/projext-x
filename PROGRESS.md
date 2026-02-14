@@ -43,6 +43,24 @@
 - [ ] PostgreSQL for production deployment
 - [ ] Rate limiting on API endpoints
 
+## Potential Enhancements & Cautions
+
+### Potential Enhancements
+- Add API endpoint-level rate limiting and abuse protection policies
+- Introduce role-based auth (service/admin keys) and key rotation workflow
+- Add observability stack (request tracing, metrics dashboards, alert thresholds)
+- Expand integration tests against PostgreSQL and eBay sandbox smoke checks
+- Add deployment runbooks (backup/restore, rollback, incident response)
+- Add background job reliability safeguards (idempotency keys, dead-letter handling)
+
+### Cautions to Track
+- Keep `mypy` as a required CI gate before declaring full production hardening
+- Monitor drift between `PROGRESS.md` claims and actual code/test coverage
+- Avoid over-reliance on broad lint/test suppressions; reduce ignores over time
+- Validate Python runtime consistency (3.12+) across all local/dev/CI environments
+- Ensure API key usage is enforced in non-dev deployments with strict secret handling
+- Confirm health checks remain meaningful (DB + dependency checks) as system complexity grows
+
 ## Timeline
 
 ### 2026-02-05
