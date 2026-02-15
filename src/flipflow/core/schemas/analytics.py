@@ -7,6 +7,7 @@ from pydantic import BaseModel
 
 class ZombieReport(BaseModel):
     """Report for a single detected zombie listing."""
+
     listing_id: int
     sku: str
     title: str
@@ -21,6 +22,7 @@ class ZombieReport(BaseModel):
 
 class ZombieScanResult(BaseModel):
     """Result of a full zombie scan."""
+
     total_scanned: int
     zombies_found: int
     purgatory_candidates: int
@@ -29,6 +31,7 @@ class ZombieScanResult(BaseModel):
 
 class ResurrectionResult(BaseModel):
     """Result of a single listing resurrection."""
+
     listing_id: int
     sku: str
     old_item_id: str | None

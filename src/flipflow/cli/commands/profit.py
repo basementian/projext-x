@@ -54,8 +54,6 @@ def calc(
             f"\n[red bold]RED ALERT:[/] Profit ${result.net_profit:.2f} "
             f"is below ${result.profit_floor:.2f} floor!"
         )
-        console.print(
-            f"[yellow]Minimum viable price:[/] ${result.minimum_viable_price:.2f}"
-        )
+        console.print(f"[yellow]Minimum viable price:[/] ${result.minimum_viable_price:.2f}")
     else:
         console.print(f"\n[green]Profit meets ${result.profit_floor:.2f} floor.[/]")

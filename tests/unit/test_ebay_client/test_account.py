@@ -11,10 +11,13 @@ class TestUpdateHandlingTime:
         def handler(request: httpx.Request) -> httpx.Response:
             assert request.method == "PUT"
             assert "/fulfillment_policy/POL-123" in str(request.url)
-            return httpx.Response(200, json={
-                "policyId": "POL-123",
-                "handlingTime": {"unit": "BUSINESS_DAY", "value": 2},
-            })
+            return httpx.Response(
+                200,
+                json={
+                    "policyId": "POL-123",
+                    "handlingTime": {"unit": "BUSINESS_DAY", "value": 2},
+                },
+            )
 
         http = build_http_client(handler)
         ep = AccountEndpoints(http)

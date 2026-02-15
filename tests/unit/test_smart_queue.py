@@ -18,7 +18,10 @@ def queue(test_config, empty_mock_ebay):
 
 async def _create_listing(db_session, sku, title="Test Item"):
     listing = Listing(
-        sku=sku, title=title, purchase_price=10, list_price=30,
+        sku=sku,
+        title=title,
+        purchase_price=10,
+        list_price=30,
         status=ListingStatus.DRAFT,
     )
     db_session.add(listing)
@@ -110,6 +113,7 @@ class TestReleaseBatch:
 
         # Check the entry was marked failed
         from sqlalchemy import select
+
         stmt = select(QueueEntry).where(QueueEntry.listing_id == listing.id)
         result = await db_session.execute(stmt)
         entry = result.scalar_one()

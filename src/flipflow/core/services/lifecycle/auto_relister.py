@@ -52,14 +52,16 @@ class AutoRelister:
         candidates = []
         for listing in active_listings:
             if self._is_due_for_relist(listing):
-                candidates.append({
-                    "listing_id": listing.id,
-                    "sku": listing.sku,
-                    "title": listing.title,
-                    "days_active": listing.days_active,
-                    "total_views": listing.total_views,
-                    "current_price": float(listing.current_price or listing.list_price),
-                })
+                candidates.append(
+                    {
+                        "listing_id": listing.id,
+                        "sku": listing.sku,
+                        "title": listing.title,
+                        "days_active": listing.days_active,
+                        "total_views": listing.total_views,
+                        "current_price": float(listing.current_price or listing.list_price),
+                    }
+                )
 
         return candidates
 
@@ -105,17 +107,24 @@ class AutoRelister:
             )
             db.add(record)
 
-            relisted.append({
-                "listing_id": listing.id,
-                "sku": listing.sku,
-                "old_item_id": old_item_id,
-                "new_item_id": res.new_item_id,
-            })
+            relisted.append(
+                {
+                    "listing_id": listing.id,
+                    "sku": listing.sku,
+                    "old_item_id": old_item_id,
+                    "new_item_id": res.new_item_id,
+                }
+            )
 
         await db.flush()
 
-        logger.info("Auto relister: %d scanned, %d relisted, %d skipped, %d errors",
-                    len(active_listings), len(relisted), skipped, errors)
+        logger.info(
+            "Auto relister: %d scanned, %d relisted, %d skipped, %d errors",
+            len(active_listings),
+            len(relisted),
+            skipped,
+            errors,
+        )
         return {
             "total_scanned": len(active_listings),
             "relisted": len(relisted),

@@ -148,12 +148,17 @@ class MockEbayClient:
     # === Analytics ===
 
     async def get_traffic_report(
-        self, listing_ids: list[str], date_range: str, metrics: list[str],
+        self,
+        listing_ids: list[str],
+        date_range: str,
+        metrics: list[str],
     ) -> dict:
         self._check_failure("get_traffic_report")
         records = []
         for lid in listing_ids:
-            data = self.traffic.get(lid, {"listingId": lid, "views": 0, "impressions": 0, "clicks": 0})
+            data = self.traffic.get(
+                lid, {"listingId": lid, "views": 0, "impressions": 0, "clicks": 0}
+            )
             records.append(data)
         return {"records": records}
 
@@ -191,7 +196,10 @@ class MockEbayClient:
     # === Buyer Engagement ===
 
     async def send_offer_to_buyer(
-        self, listing_id: str, buyer_id: str, offer_data: dict,
+        self,
+        listing_id: str,
+        buyer_id: str,
+        offer_data: dict,
     ) -> dict:
         self._check_failure("send_offer_to_buyer")
         return {
@@ -208,7 +216,11 @@ class MockEbayClient:
     # === Negotiation ===
 
     async def respond_to_offer(
-        self, listing_id: str, offer_id: str, action: str, counter_amount: float | None = None,
+        self,
+        listing_id: str,
+        offer_id: str,
+        action: str,
+        counter_amount: float | None = None,
     ) -> dict:
         self._check_failure("respond_to_offer")
         return {

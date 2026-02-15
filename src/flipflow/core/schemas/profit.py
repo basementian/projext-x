@@ -5,14 +5,18 @@ from pydantic import BaseModel, Field
 
 class ProfitCalcRequest(BaseModel):
     """Input for profit calculation."""
+
     sale_price: float = Field(gt=0, description="Expected sale price")
     purchase_price: float = Field(ge=0, description="Cost to acquire the item")
     shipping_cost: float = Field(ge=0, default=0, description="Shipping cost")
-    ad_rate_percent: float = Field(ge=0, default=0, description="Promoted listing ad rate (e.g. 1.5 for 1.5%)")
+    ad_rate_percent: float = Field(
+        ge=0, default=0, description="Promoted listing ad rate (e.g. 1.5 for 1.5%)"
+    )
 
 
 class ProfitCalcResponse(BaseModel):
     """Output of profit calculation."""
+
     sale_price: float
     purchase_price: float
     shipping_cost: float

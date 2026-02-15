@@ -119,10 +119,12 @@ class Repricer:
             repriced.append(reprice)
 
             if listing.sku:
-                ebay_updates.append({
-                    "sku": listing.sku,
-                    "price": reprice["new_price"],
-                })
+                ebay_updates.append(
+                    {
+                        "sku": listing.sku,
+                        "price": reprice["new_price"],
+                    }
+                )
 
         # Batch push to eBay
         ebay_errors = 0
@@ -134,8 +136,13 @@ class Repricer:
 
         await db.flush()
 
-        logger.info("Repricer scan: %d scanned, %d repriced, %d skipped, %d eBay errors",
-                    len(active_listings), len(repriced), skipped, ebay_errors)
+        logger.info(
+            "Repricer scan: %d scanned, %d repriced, %d skipped, %d eBay errors",
+            len(active_listings),
+            len(repriced),
+            skipped,
+            ebay_errors,
+        )
         return {
             "total_scanned": len(active_listings),
             "repriced": len(repriced),

@@ -255,7 +255,11 @@ class TestHandleIncomingOffer:
         await db_session.flush()
 
         result = await sniper.handle_incoming_offer(
-            db_session, listing.id, "BUYER-1", "OFFER-123", 46.0,
+            db_session,
+            listing.id,
+            "BUYER-1",
+            "OFFER-123",
+            46.0,
         )
         assert result["success"] is True
         assert result["action"] == OfferAction.ACCEPT
@@ -268,7 +272,11 @@ class TestHandleIncomingOffer:
         await db_session.flush()
 
         result = await sniper.handle_incoming_offer(
-            db_session, listing.id, "BUYER-1", "OFFER-123", 40.0,
+            db_session,
+            listing.id,
+            "BUYER-1",
+            "OFFER-123",
+            40.0,
         )
         assert result["success"] is True
         assert result["action"] == OfferAction.COUNTER
@@ -281,7 +289,11 @@ class TestHandleIncomingOffer:
         await db_session.flush()
 
         result = await sniper.handle_incoming_offer(
-            db_session, listing.id, "BUYER-1", "OFFER-123", 30.0,
+            db_session,
+            listing.id,
+            "BUYER-1",
+            "OFFER-123",
+            30.0,
         )
         assert result["success"] is True
         assert result["action"] == OfferAction.REJECT
@@ -294,7 +306,11 @@ class TestHandleIncomingOffer:
         await db_session.flush()
 
         result = await sniper.handle_incoming_offer(
-            db_session, listing.id, "BUYER-1", "OFFER-123", 45.0,
+            db_session,
+            listing.id,
+            "BUYER-1",
+            "OFFER-123",
+            45.0,
         )
         assert result["action"] == OfferAction.ACCEPT
 
@@ -304,7 +320,11 @@ class TestHandleIncomingOffer:
         await db_session.flush()
 
         result = await sniper.handle_incoming_offer(
-            db_session, listing.id, "BUYER-1", "OFFER-123", 37.5,
+            db_session,
+            listing.id,
+            "BUYER-1",
+            "OFFER-123",
+            37.5,
         )
         assert result["action"] == OfferAction.COUNTER
 
@@ -314,7 +334,11 @@ class TestHandleIncomingOffer:
         await db_session.flush()
 
         await sniper.handle_incoming_offer(
-            db_session, listing.id, "BUYER-1", "OFFER-123", 46.0,
+            db_session,
+            listing.id,
+            "BUYER-1",
+            "OFFER-123",
+            46.0,
         )
 
         stmt = select(OfferRecord).where(OfferRecord.listing_id == listing.id)
@@ -327,7 +351,11 @@ class TestHandleIncomingOffer:
 
     async def test_listing_not_found(self, sniper, db_session):
         result = await sniper.handle_incoming_offer(
-            db_session, 999, "BUYER-1", "OFFER-123", 40.0,
+            db_session,
+            999,
+            "BUYER-1",
+            "OFFER-123",
+            40.0,
         )
         assert result["success"] is False
         assert "not found" in result["error"]
@@ -340,7 +368,11 @@ class TestHandleIncomingOffer:
         ebay.inject_failure("respond_to_offer", RuntimeError("API down"))
 
         result = await sniper.handle_incoming_offer(
-            db_session, listing.id, "BUYER-1", "OFFER-123", 46.0,
+            db_session,
+            listing.id,
+            "BUYER-1",
+            "OFFER-123",
+            46.0,
         )
         assert result["success"] is False
         assert "API" in result["error"]
@@ -351,7 +383,11 @@ class TestHandleIncomingOffer:
         await db_session.flush()
 
         await sniper.handle_incoming_offer(
-            db_session, listing.id, "BUYER-1", "OFFER-123", 40.0,
+            db_session,
+            listing.id,
+            "BUYER-1",
+            "OFFER-123",
+            40.0,
         )
 
         stmt = select(OfferRecord).where(OfferRecord.listing_id == listing.id)

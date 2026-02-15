@@ -12,11 +12,19 @@ def killer(test_config, empty_mock_ebay):
     return ZombieKiller(empty_mock_ebay, test_config)
 
 
-async def _create_listing(db_session, sku, days_active, views, status="active", cycles=0, item_id=None):
+async def _create_listing(
+    db_session, sku, days_active, views, status="active", cycles=0, item_id=None
+):
     listing = Listing(
-        sku=sku, title=f"Test {sku}", purchase_price=10, list_price=30,
-        status=status, days_active=days_active, total_views=views,
-        zombie_cycle_count=cycles, ebay_item_id=item_id,
+        sku=sku,
+        title=f"Test {sku}",
+        purchase_price=10,
+        list_price=30,
+        status=status,
+        days_active=days_active,
+        total_views=views,
+        zombie_cycle_count=cycles,
+        ebay_item_id=item_id,
     )
     db_session.add(listing)
     await db_session.flush()

@@ -32,5 +32,6 @@ async def get_ebay(request: Request):
     # Sandbox or production: use real client as singleton
     if not hasattr(request.app.state, "_ebay_client"):
         from flipflow.infrastructure.ebay import RealEbayClient
+
         request.app.state._ebay_client = RealEbayClient(config)
     return request.app.state._ebay_client

@@ -13,7 +13,9 @@ class Listing(Base, TimestampMixin, SoftDeleteMixin):
     __tablename__ = "listings"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    ebay_item_id: Mapped[str | None] = mapped_column(String(64), unique=True, nullable=True, index=True)
+    ebay_item_id: Mapped[str | None] = mapped_column(
+        String(64), unique=True, nullable=True, index=True
+    )
     sku: Mapped[str] = mapped_column(String(128), unique=True, index=True)
     title: Mapped[str] = mapped_column(String(80))
     title_sanitized: Mapped[str | None] = mapped_column(String(80), nullable=True)
@@ -49,10 +51,14 @@ class Listing(Base, TimestampMixin, SoftDeleteMixin):
 
     # eBay offer tracking
     offer_id: Mapped[str | None] = mapped_column(String(64), nullable=True)
-    last_offer_sent_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    last_offer_sent_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
 
     # Repricing tracking
-    last_repriced_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    last_repriced_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
 
     # Relationships
     snapshots: Mapped[list["ListingSnapshot"]] = relationship(back_populates="listing")

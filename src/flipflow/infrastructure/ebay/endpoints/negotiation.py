@@ -12,7 +12,10 @@ class NegotiationEndpoints:
         self._http = http
 
     async def send_offer_to_buyer(
-        self, listing_id: str, buyer_id: str, offer_data: dict,
+        self,
+        listing_id: str,
+        buyer_id: str,
+        offer_data: dict,
     ) -> dict:
         """POST /sell/negotiation/v1/send_offer_to_interested_buyers"""
         payload = {
@@ -28,7 +31,8 @@ class NegotiationEndpoints:
             "message": offer_data.get("message", ""),
         }
         response = await self._http.post(
-            f"{self.BASE}/send_offer_to_interested_buyers", json=payload,
+            f"{self.BASE}/send_offer_to_interested_buyers",
+            json=payload,
         )
         return response.json()
 
@@ -38,7 +42,8 @@ class NegotiationEndpoints:
         Filters findEligibleItems response to the requested listing.
         """
         response = await self._http.get(
-            f"{self.BASE}/find_eligible_items", params={"limit": 100},
+            f"{self.BASE}/find_eligible_items",
+            params={"limit": 100},
         )
         data = response.json()
         eligible = data.get("eligibleItems", [])
@@ -47,14 +52,20 @@ class NegotiationEndpoints:
         for item in eligible:
             if item.get("listingId") == listing_id:
                 for buyer in item.get("interestedBuyers", []):
-                    watchers.append({
-                        "buyerId": buyer.get("buyerId", ""),
-                        "watchDate": buyer.get("addedDate", ""),
-                    })
+                    watchers.append(
+                        {
+                            "buyerId": buyer.get("buyerId", ""),
+                            "watchDate": buyer.get("addedDate", ""),
+                        }
+                    )
         return watchers
 
     async def respond_to_offer(
-        self, listing_id: str, offer_id: str, action: str, counter_amount: float | None = None,
+        self,
+        listing_id: str,
+        offer_id: str,
+        action: str,
+        counter_amount: float | None = None,
     ) -> dict:
         """POST /sell/negotiation/v1/respond_to_offer
 
@@ -69,6 +80,7 @@ class NegotiationEndpoints:
                 "price": {"currency": "USD", "value": str(counter_amount)},
             }
         response = await self._http.post(
-            f"{self.BASE}/respond_to_offer", json=payload,
+            f"{self.BASE}/respond_to_offer",
+            json=payload,
         )
         return response.json()

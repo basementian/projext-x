@@ -15,7 +15,8 @@ class MarketingEndpoints:
     async def create_campaign(self, campaign_data: dict) -> dict:
         """POST /sell/marketing/v1/ad_campaign"""
         response = await self._http.post(
-            f"{self.BASE}/ad_campaign", json=campaign_data,
+            f"{self.BASE}/ad_campaign",
+            json=campaign_data,
         )
         campaign_id = ""
         location = response.headers.get("Location", "")

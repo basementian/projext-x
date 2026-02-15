@@ -58,15 +58,21 @@ def scan():
     for z in result.zombies:
         status = "[red]PURGATORY[/]" if z.should_purgatory else "[yellow]ZOMBIE[/]"
         table.add_row(
-            str(z.listing_id), z.sku, z.title[:35],
-            str(z.days_active), str(z.total_views),
-            str(z.zombie_cycle_count), status,
+            str(z.listing_id),
+            z.sku,
+            z.title[:35],
+            str(z.days_active),
+            str(z.total_views),
+            str(z.zombie_cycle_count),
+            status,
         )
 
     console.print(table)
-    console.print(f"\n[dim]Scanned: {result.total_scanned} | "
-                  f"Zombies: {result.zombies_found} | "
-                  f"Purgatory candidates: {result.purgatory_candidates}[/]")
+    console.print(
+        f"\n[dim]Scanned: {result.total_scanned} | "
+        f"Zombies: {result.zombies_found} | "
+        f"Purgatory candidates: {result.purgatory_candidates}[/]"
+    )
 
 
 def resurrect(

@@ -107,13 +107,14 @@ class EbayTokenManager:
         self._handle_token_response(response, is_user=False)
 
     def _handle_token_response(
-        self, response: httpx.Response, *, is_user: bool,
+        self,
+        response: httpx.Response,
+        *,
+        is_user: bool,
     ) -> None:
         """Parse token response or raise EbayAuthError."""
         if response.status_code != 200:
-            raise EbayAuthError(
-                f"Token request failed: {response.status_code} {response.text}"
-            )
+            raise EbayAuthError(f"Token request failed: {response.status_code} {response.text}")
 
         data = response.json()
         token = TokenData(

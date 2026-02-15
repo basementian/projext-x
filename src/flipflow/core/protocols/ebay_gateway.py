@@ -9,7 +9,6 @@ from typing import Protocol, runtime_checkable
 
 @runtime_checkable
 class EbayGateway(Protocol):
-
     # === Inventory Management ===
 
     async def create_inventory_item(self, sku: str, item_data: dict) -> dict:
@@ -57,7 +56,10 @@ class EbayGateway(Protocol):
     # === Analytics ===
 
     async def get_traffic_report(
-        self, listing_ids: list[str], date_range: str, metrics: list[str],
+        self,
+        listing_ids: list[str],
+        date_range: str,
+        metrics: list[str],
     ) -> dict:
         """Get traffic report (views, impressions, clicks) for listings."""
         ...
@@ -85,7 +87,10 @@ class EbayGateway(Protocol):
     # === Buyer Engagement ===
 
     async def send_offer_to_buyer(
-        self, listing_id: str, buyer_id: str, offer_data: dict,
+        self,
+        listing_id: str,
+        buyer_id: str,
+        offer_data: dict,
     ) -> dict:
         """Send a private offer to a specific buyer."""
         ...
@@ -97,7 +102,11 @@ class EbayGateway(Protocol):
     # === Negotiation ===
 
     async def respond_to_offer(
-        self, listing_id: str, offer_id: str, action: str, counter_amount: float | None = None,
+        self,
+        listing_id: str,
+        offer_id: str,
+        action: str,
+        counter_amount: float | None = None,
     ) -> dict:
         """Respond to an incoming buyer offer (accept, counter, or reject)."""
         ...

@@ -15,9 +15,7 @@ class LowSTRError(GatekeeperError):
     def __init__(self, str_value: float, threshold: float = 0.4):
         self.str_value = str_value
         self.threshold = threshold
-        super().__init__(
-            f"Sell-Through Rate {str_value:.1%} is below minimum {threshold:.0%}"
-        )
+        super().__init__(f"Sell-Through Rate {str_value:.1%} is below minimum {threshold:.0%}")
 
 
 class LowProfitError(GatekeeperError):
@@ -26,9 +24,7 @@ class LowProfitError(GatekeeperError):
     def __init__(self, net_profit: float, floor: float = 5.00):
         self.net_profit = net_profit
         self.floor = floor
-        super().__init__(
-            f"Net profit ${net_profit:.2f} is below minimum ${floor:.2f}"
-        )
+        super().__init__(f"Net profit ${net_profit:.2f} is below minimum ${floor:.2f}")
 
 
 class TitleError(GatekeeperError):

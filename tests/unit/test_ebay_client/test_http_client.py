@@ -114,7 +114,8 @@ class TestErrorMapping:
     async def test_404_raises_not_found(self):
         def handler(request: httpx.Request) -> httpx.Response:
             return httpx.Response(
-                404, json={"errors": [{"message": "Item not found"}]},
+                404,
+                json={"errors": [{"message": "Item not found"}]},
             )
 
         client = _build_client(handler)
@@ -125,7 +126,8 @@ class TestErrorMapping:
     async def test_401_raises_auth_error(self):
         def handler(request: httpx.Request) -> httpx.Response:
             return httpx.Response(
-                401, json={"errors": [{"message": "Invalid token"}]},
+                401,
+                json={"errors": [{"message": "Invalid token"}]},
             )
 
         client = _build_client(handler)

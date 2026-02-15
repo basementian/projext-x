@@ -12,11 +12,14 @@ class TestGetTrafficReport:
             url = str(request.url)
             assert "traffic_report" in url
             assert "dimension=LISTING" in url
-            return httpx.Response(200, json={
-                "records": [
-                    {"listingId": "123", "views": 42, "impressions": 500},
-                ],
-            })
+            return httpx.Response(
+                200,
+                json={
+                    "records": [
+                        {"listingId": "123", "views": 42, "impressions": 500},
+                    ],
+                },
+            )
 
         http = build_http_client(handler)
         ep = AnalyticsEndpoints(http)

@@ -40,10 +40,7 @@ class Purgatory:
         sale * (1 - fee_rate) = cost + shipping + per_order_fee
         sale = (cost + shipping + per_order_fee) / (1 - total_fee_rate)
         """
-        total_fee_rate = (
-            self.config.ebay_base_fee_rate
-            + self.config.payment_processing_rate
-        )
+        total_fee_rate = self.config.ebay_base_fee_rate + self.config.payment_processing_rate
         denominator = 1 - total_fee_rate
         if denominator <= 0:
             return float("inf")
@@ -70,10 +67,7 @@ class Purgatory:
 
     def should_suggest_donate(self, listing: Listing, days_in_purgatory: int) -> bool:
         """After 7 days in purgatory at markdown price, suggest donation."""
-        return (
-            listing.status == ListingStatus.PURGATORY
-            and days_in_purgatory >= 7
-        )
+        return listing.status == ListingStatus.PURGATORY and days_in_purgatory >= 7
 
     async def enter_purgatory(self, db: AsyncSession, listing_id: int) -> dict:
         """Move a listing into purgatory pricing.
@@ -93,10 +87,14 @@ class Purgatory:
         # Update price on eBay
         if listing.sku:
             try:
-                await self.ebay.bulk_update_price_quantity([{
-                    "sku": listing.sku,
-                    "price": markdown,
-                }])
+                await self.ebay.bulk_update_price_quantity(
+                    [
+                        {
+                            "sku": listing.sku,
+                            "price": markdown,
+                        }
+                    ]
+                )
             except Exception as e:
                 logger.error("Failed to update purgatory price for listing %d: %s", listing_id, e)
                 return {"success": False, "error": f"eBay update failed: {e}"}
@@ -104,11 +102,13 @@ class Purgatory:
         await db.flush()
 
         # Calculate how much we lose at markdown
-        profit_result = self.profit_calc.calculate(ProfitCalcRequest(
-            sale_price=markdown,
-            purchase_price=float(listing.purchase_price),
-            shipping_cost=float(listing.shipping_cost),
-        ))
+        profit_result = self.profit_calc.calculate(
+            ProfitCalcRequest(
+                sale_price=markdown,
+                purchase_price=float(listing.purchase_price),
+                shipping_cost=float(listing.shipping_cost),
+            )
+        )
 
         return {
             "success": True,
@@ -134,12 +134,16 @@ class Purgatory:
             # Rough estimate: days_active is total, not purgatory-specific
             # In production, we'd track when they entered purgatory
             if listing.days_active > 7:
-                suggestions.append({
-                    "listing_id": listing.id,
-                    "sku": listing.sku,
-                    "title": listing.title,
-                    "current_price": float(listing.current_price) if listing.current_price else 0,
-                    "suggestion": "DONATE_OR_TRASH",
-                })
+                suggestions.append(
+                    {
+                        "listing_id": listing.id,
+                        "sku": listing.sku,
+                        "title": listing.title,
+                        "current_price": float(listing.current_price)
+                        if listing.current_price
+                        else 0,
+                        "suggestion": "DONATE_OR_TRASH",
+                    }
+                )
 
         return suggestions

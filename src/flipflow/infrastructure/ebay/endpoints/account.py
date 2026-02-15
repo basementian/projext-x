@@ -20,6 +20,7 @@ class AccountEndpoints:
             },
         }
         response = await self._http.put(
-            f"{self.BASE}/fulfillment_policy/{policy_id}", json=payload,
+            f"{self.BASE}/fulfillment_policy/{policy_id}",
+            json=payload,
         )
         return response.json()

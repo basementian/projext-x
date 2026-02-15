@@ -1,6 +1,5 @@
 """Tests for Graduated Repricer — time-based markdown ladder."""
 
-
 import pytest
 
 from flipflow.core.constants import ListingStatus
@@ -119,8 +118,11 @@ class TestCalculateReprice:
     def test_enforces_profit_floor(self, repricer):
         # Very low margin item — repricing would go below minimum viable price
         listing = _make_listing(
-            purchase_price=45.0, list_price=50.0, shipping_cost=5.0,
-            days_active=45, ad_rate_percent=0.0,
+            purchase_price=45.0,
+            list_price=50.0,
+            shipping_cost=5.0,
+            days_active=45,
+            ad_rate_percent=0.0,
         )
         result = repricer.calculate_reprice(listing)
         assert result is not None
@@ -131,8 +133,11 @@ class TestCalculateReprice:
     def test_returns_none_when_floor_equals_current(self, repricer):
         # Price already at floor — no change
         listing = _make_listing(
-            purchase_price=48.0, list_price=50.0, shipping_cost=5.0,
-            days_active=45, ad_rate_percent=0.0,
+            purchase_price=48.0,
+            list_price=50.0,
+            shipping_cost=5.0,
+            days_active=45,
+            ad_rate_percent=0.0,
         )
         # The floor price is above the 20% markdown, so the floor clamps it
         result = repricer.calculate_reprice(listing)

@@ -7,6 +7,7 @@ from pydantic import BaseModel
 
 class QueueEntryResponse(BaseModel):
     """Queue entry details."""
+
     id: int
     listing_id: int
     sku: str
@@ -21,6 +22,7 @@ class QueueEntryResponse(BaseModel):
 
 class QueueStatusResponse(BaseModel):
     """Overall queue status."""
+
     pending: int
     released_today: int
     failed: int

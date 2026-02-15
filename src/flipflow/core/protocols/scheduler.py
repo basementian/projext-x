@@ -14,7 +14,11 @@ class SchedulerGateway(Protocol):
     """
 
     def add_job(
-        self, job_id: str, func: Callable, trigger: str, **trigger_args,
+        self,
+        job_id: str,
+        func: Callable,
+        trigger: str,
+        **trigger_args,
     ) -> None:
         """Add a scheduled job."""
         ...

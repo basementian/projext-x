@@ -36,7 +36,9 @@ class ProfitFloorCalc:
         margin = (net_profit / sale * 100) if sale > 0 else 0
 
         min_price = self.find_minimum_price(
-            cost, shipping, request.ad_rate_percent,
+            cost,
+            shipping,
+            request.ad_rate_percent,
         )
 
         return ProfitCalcResponse(

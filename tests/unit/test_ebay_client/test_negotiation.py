@@ -16,7 +16,8 @@ class TestSendOfferToBuyer:
         http = build_http_client(handler)
         ep = NegotiationEndpoints(http)
         result = await ep.send_offer_to_buyer(
-            "LISTING-123", "BUYER-456",
+            "LISTING-123",
+            "BUYER-456",
             {"price": 45.0, "currency": "USD", "message": "Special deal!"},
         )
         assert result["status"] == "SENT"
@@ -27,23 +28,26 @@ class TestGetWatchers:
     async def test_returns_watchers_for_listing(self):
         def handler(request: httpx.Request) -> httpx.Response:
             assert "find_eligible_items" in str(request.url)
-            return httpx.Response(200, json={
-                "eligibleItems": [
-                    {
-                        "listingId": "LISTING-123",
-                        "interestedBuyers": [
-                            {"buyerId": "B-1", "addedDate": "2026-01-20"},
-                            {"buyerId": "B-2", "addedDate": "2026-01-21"},
-                        ],
-                    },
-                    {
-                        "listingId": "OTHER-999",
-                        "interestedBuyers": [
-                            {"buyerId": "B-3"},
-                        ],
-                    },
-                ],
-            })
+            return httpx.Response(
+                200,
+                json={
+                    "eligibleItems": [
+                        {
+                            "listingId": "LISTING-123",
+                            "interestedBuyers": [
+                                {"buyerId": "B-1", "addedDate": "2026-01-20"},
+                                {"buyerId": "B-2", "addedDate": "2026-01-21"},
+                            ],
+                        },
+                        {
+                            "listingId": "OTHER-999",
+                            "interestedBuyers": [
+                                {"buyerId": "B-3"},
+                            ],
+                        },
+                    ],
+                },
+            )
 
         http = build_http_client(handler)
         ep = NegotiationEndpoints(http)

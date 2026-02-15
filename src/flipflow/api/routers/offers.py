@@ -37,5 +37,9 @@ async def handle_incoming_offer(
 ):
     sniper = OfferSniper(ebay, config)
     return await sniper.handle_incoming_offer(
-        db, listing_id, request.buyer_id, request.offer_id, request.offer_amount,
+        db,
+        listing_id,
+        request.buyer_id,
+        request.offer_id,
+        request.offer_amount,
     )

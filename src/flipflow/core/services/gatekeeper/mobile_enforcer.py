@@ -93,7 +93,7 @@ class MobileEnforcer:
         html_parts = []
         for para in paragraphs:
             clean = para.replace("\n", "<br>")
-            html_parts.append(f"<p style=\"margin:0 0 12px 0;\">{clean}</p>")
+            html_parts.append(f'<p style="margin:0 0 12px 0;">{clean}</p>')
         content = "\n".join(html_parts)
         return _MOBILE_TEMPLATE.format(content=content)
 
@@ -109,13 +109,13 @@ class MobileEnforcer:
         lower = html.lower()
 
         # Check for problematic patterns
-        has_fixed_width = bool(re.search(r'width\s*:\s*\d{4,}px', lower))
-        has_small_font = bool(re.search(r'font-size\s*:\s*(\d+)(px|pt)', lower))
+        has_fixed_width = bool(re.search(r"width\s*:\s*\d{4,}px", lower))
+        has_small_font = bool(re.search(r"font-size\s*:\s*(\d+)(px|pt)", lower))
         has_tables = "<table" in lower
         has_complex_css = "<style" in lower
 
         if has_small_font:
-            match = re.search(r'font-size\s*:\s*(\d+)(px|pt)', lower)
+            match = re.search(r"font-size\s*:\s*(\d+)(px|pt)", lower)
             if match:
                 size = int(match.group(1))
                 unit = match.group(2)

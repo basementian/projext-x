@@ -12,7 +12,9 @@ from flipflow.infrastructure.ebay.token_manager import EbayTokenManager, TokenDa
 
 
 def make_token_response(
-    access_token="mock-token-123", expires_in=7200, status=200,
+    access_token="mock-token-123",
+    expires_in=7200,
+    status=200,
 ):
     """Build a valid eBay token response body."""
     return {

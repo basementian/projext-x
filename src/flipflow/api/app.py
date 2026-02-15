@@ -26,6 +26,7 @@ async def lifespan(app: FastAPI):
     # Create tables (dev/mock mode only; production uses alembic)
     if config.ebay_mode == "mock":
         import flipflow.core.models  # noqa: F401
+
         async with engine.begin() as conn:
             await conn.run_sync(Base.metadata.create_all)
 
@@ -58,6 +59,7 @@ def create_app(config: FlipFlowConfig | None = None) -> FastAPI:
     # API key auth — only enabled when api_key is set
     if config.api_key:
         from flipflow.api.middleware import ApiKeyMiddleware
+
         app.add_middleware(ApiKeyMiddleware, api_key=config.api_key)
 
     # CORS — configurable origins (defaults to localhost for dev)

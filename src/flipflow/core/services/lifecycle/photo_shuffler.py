@@ -45,11 +45,13 @@ class PhotoShuffler:
         for listing in candidates:
             photos = listing.photo_urls
             if len(photos) < 2:
-                skipped.append({
-                    "listing_id": listing.id,
-                    "sku": listing.sku,
-                    "reason": "Only 1 photo, cannot shuffle",
-                })
+                skipped.append(
+                    {
+                        "listing_id": listing.id,
+                        "sku": listing.sku,
+                        "reason": "Only 1 photo, cannot shuffle",
+                    }
+                )
                 continue
 
             # Rotate: move next photo to main slot
@@ -60,27 +62,38 @@ class PhotoShuffler:
             # Update on eBay if we have an item ID
             if listing.sku:
                 try:
-                    await self.ebay.update_inventory_item(listing.sku, {
-                        "photo_urls": new_photos,
-                    })
-                    shuffled.append({
-                        "listing_id": listing.id,
-                        "sku": listing.sku,
-                        "old_main": photos[0],
-                        "new_main": new_photos[0],
-                    })
+                    await self.ebay.update_inventory_item(
+                        listing.sku,
+                        {
+                            "photo_urls": new_photos,
+                        },
+                    )
+                    shuffled.append(
+                        {
+                            "listing_id": listing.id,
+                            "sku": listing.sku,
+                            "old_main": photos[0],
+                            "new_main": new_photos[0],
+                        }
+                    )
                 except Exception as e:
                     logger.error("Photo shuffle failed for listing %d: %s", listing.id, e)
-                    skipped.append({
-                        "listing_id": listing.id,
-                        "sku": listing.sku,
-                        "reason": f"eBay update failed: {e}",
-                    })
+                    skipped.append(
+                        {
+                            "listing_id": listing.id,
+                            "sku": listing.sku,
+                            "reason": f"eBay update failed: {e}",
+                        }
+                    )
 
         await db.flush()
 
-        logger.info("Photo shuffle: %d candidates, %d shuffled, %d skipped",
-                    len(candidates), len(shuffled), len(skipped))
+        logger.info(
+            "Photo shuffle: %d candidates, %d shuffled, %d skipped",
+            len(candidates),
+            len(shuffled),
+            len(skipped),
+        )
         return {
             "candidates": len(candidates),
             "shuffled": len(shuffled),

@@ -61,7 +61,10 @@ class OfferSniper:
         return round(current_price * (1 - pct / 100), 2)
 
     async def _was_offer_sent_recently(
-        self, db: AsyncSession, listing_id: int, buyer_id: str,
+        self,
+        db: AsyncSession,
+        listing_id: int,
+        buyer_id: str,
     ) -> bool:
         """Check if an offer was sent to this specific buyer in the last 24 hours."""
         cutoff = datetime.now(UTC) - timedelta(hours=24)
@@ -135,18 +138,21 @@ class OfferSniper:
                         )
                         db.add(record)
 
-                        details.append({
-                            "listing_id": listing.id,
-                            "sku": listing.sku,
-                            "buyer_id": buyer_id,
-                            "original_price": price,
-                            "offer_price": offer_price,
-                            "discount_percent": discount_pct,
-                            "days_active": listing.days_active,
-                        })
+                        details.append(
+                            {
+                                "listing_id": listing.id,
+                                "sku": listing.sku,
+                                "buyer_id": buyer_id,
+                                "original_price": price,
+                                "offer_price": offer_price,
+                                "discount_percent": discount_pct,
+                                "days_active": listing.days_active,
+                            }
+                        )
                     except Exception as e:
-                        logger.error("Failed to send offer for listing %d to %s: %s",
-                                     listing.id, buyer_id, e)
+                        logger.error(
+                            "Failed to send offer for listing %d to %s: %s", listing.id, buyer_id, e
+                        )
                         errors += 1
 
             except Exception as e:
@@ -155,8 +161,12 @@ class OfferSniper:
 
         await db.flush()
 
-        logger.info("Offer sniper: %d checked, %d offers sent, %d errors",
-                    len(active_listings), offers_sent, errors)
+        logger.info(
+            "Offer sniper: %d checked, %d offers sent, %d errors",
+            len(active_listings),
+            offers_sent,
+            errors,
+        )
         return {
             "listings_checked": len(active_listings),
             "offers_sent": offers_sent,
@@ -165,8 +175,12 @@ class OfferSniper:
         }
 
     async def handle_incoming_offer(
-        self, db: AsyncSession, listing_id: int, buyer_id: str,
-        offer_id: str, offer_amount: float,
+        self,
+        db: AsyncSession,
+        listing_id: int,
+        buyer_id: str,
+        offer_id: str,
+        offer_amount: float,
     ) -> dict:
         """Handle an incoming buyer offer with accept/counter/reject thresholds.
 
@@ -196,7 +210,10 @@ class OfferSniper:
 
         try:
             await self.ebay.respond_to_offer(
-                listing.ebay_item_id, offer_id, action, counter_amount,
+                listing.ebay_item_id,
+                offer_id,
+                action,
+                counter_amount,
             )
         except Exception as e:
             return {"success": False, "error": f"eBay API error: {e}"}

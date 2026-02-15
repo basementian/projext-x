@@ -52,10 +52,15 @@ async def list_listings(
     listings = result.scalars().all()
     return [
         ListingResponse(
-            id=l.id, sku=l.sku, title=l.title,
-            title_sanitized=l.title_sanitized, status=l.status,
-            purchase_price=float(l.purchase_price), list_price=float(l.list_price),
-            days_active=l.days_active, total_views=l.total_views,
+            id=l.id,
+            sku=l.sku,
+            title=l.title,
+            title_sanitized=l.title_sanitized,
+            status=l.status,
+            purchase_price=float(l.purchase_price),
+            list_price=float(l.list_price),
+            days_active=l.days_active,
+            total_views=l.total_views,
             zombie_cycle_count=l.zombie_cycle_count,
         )
         for l in listings
@@ -70,17 +75,23 @@ async def create_listing(
 ):
     # Auto-sanitize title
     sanitizer = TitleSanitizer()
-    sanitized = sanitizer.sanitize(TitleSanitizeRequest(
-        title=data.title, brand=data.brand, model=data.model,
-    ))
+    sanitized = sanitizer.sanitize(
+        TitleSanitizeRequest(
+            title=data.title,
+            brand=data.brand,
+            model=data.model,
+        )
+    )
 
     # Auto-calculate profit
     calc = ProfitFloorCalc(config)
-    profit = calc.calculate(ProfitCalcRequest(
-        sale_price=data.list_price,
-        purchase_price=data.purchase_price,
-        shipping_cost=data.shipping_cost,
-    ))
+    profit = calc.calculate(
+        ProfitCalcRequest(
+            sale_price=data.list_price,
+            purchase_price=data.purchase_price,
+            shipping_cost=data.shipping_cost,
+        )
+    )
 
     listing = Listing(
         sku=data.sku,
@@ -114,11 +125,17 @@ async def get_listing(listing_id: int, db: AsyncSession = Depends(get_db)):
     listing = await db.get(Listing, listing_id)
     if listing is None:
         from fastapi import HTTPException
+
         raise HTTPException(status_code=404, detail="Listing not found")
     return ListingResponse(
-        id=listing.id, sku=listing.sku, title=listing.title,
-        title_sanitized=listing.title_sanitized, status=listing.status,
-        purchase_price=float(listing.purchase_price), list_price=float(listing.list_price),
-        days_active=listing.days_active, total_views=listing.total_views,
+        id=listing.id,
+        sku=listing.sku,
+        title=listing.title,
+        title_sanitized=listing.title_sanitized,
+        status=listing.status,
+        purchase_price=float(listing.purchase_price),
+        list_price=float(listing.list_price),
+        days_active=listing.days_active,
+        total_views=listing.total_views,
         zombie_cycle_count=listing.zombie_cycle_count,
     )

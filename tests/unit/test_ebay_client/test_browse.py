@@ -14,10 +14,13 @@ class TestSearchItems:
             assert "q=nike+air+max" in url or "q=nike%20air%20max" in url or "q=nike+air+max" in url
             # Verify app token is used (checked via header in build_http_client)
             assert request.headers["Authorization"] == "Bearer test-app-token"
-            return httpx.Response(200, json={
-                "itemSummaries": [{"itemId": "I-1", "title": "Nike Air Max"}],
-                "total": 1,
-            })
+            return httpx.Response(
+                200,
+                json={
+                    "itemSummaries": [{"itemId": "I-1", "title": "Nike Air Max"}],
+                    "total": 1,
+                },
+            )
 
         http = build_http_client(handler)
         ep = BrowseEndpoints(http)

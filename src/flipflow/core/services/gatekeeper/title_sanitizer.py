@@ -11,19 +11,83 @@ _MULTI_SPACES = re.compile(r"\s{2,}")
 
 # Words that confuse Cassini and look spammy
 _BANNED_WORDS = {
-    "l@@k", "look!", "look!!", "wow", "wow!", "must see", "a+++", "a++",
-    "nr", "no reserve", "free shipping", "fast shipping", "hot", "sexy",
-    "rare!", "amazing", "incredible", "awesome", "perfect", "beautiful",
-    "gorgeous", "stunning", "excellent!", "great!", "nice!", "cool!",
+    "l@@k",
+    "look!",
+    "look!!",
+    "wow",
+    "wow!",
+    "must see",
+    "a+++",
+    "a++",
+    "nr",
+    "no reserve",
+    "free shipping",
+    "fast shipping",
+    "hot",
+    "sexy",
+    "rare!",
+    "amazing",
+    "incredible",
+    "awesome",
+    "perfect",
+    "beautiful",
+    "gorgeous",
+    "stunning",
+    "excellent!",
+    "great!",
+    "nice!",
+    "cool!",
 }
 
 # Known acronyms that should stay uppercase
 _KNOWN_ACRONYMS = {
-    "nib", "nwt", "nwb", "nwot", "euc", "vgc", "guc", "oem", "oob",
-    "usb", "hdmi", "led", "lcd", "dvd", "cd", "pc", "tv", "ac", "dc",
-    "xl", "xxl", "xs", "sm", "md", "lg", "oz", "ml", "gb", "tb", "mb",
-    "hp", "ps", "hd", "sd", "rgb", "ddr", "ssd", "hdd", "rpm", "mph",
-    "nfl", "nba", "mlb", "nhl", "usa", "uk", "eu",
+    "nib",
+    "nwt",
+    "nwb",
+    "nwot",
+    "euc",
+    "vgc",
+    "guc",
+    "oem",
+    "oob",
+    "usb",
+    "hdmi",
+    "led",
+    "lcd",
+    "dvd",
+    "cd",
+    "pc",
+    "tv",
+    "ac",
+    "dc",
+    "xl",
+    "xxl",
+    "xs",
+    "sm",
+    "md",
+    "lg",
+    "oz",
+    "ml",
+    "gb",
+    "tb",
+    "mb",
+    "hp",
+    "ps",
+    "hd",
+    "sd",
+    "rgb",
+    "ddr",
+    "ssd",
+    "hdd",
+    "rpm",
+    "mph",
+    "nfl",
+    "nba",
+    "mlb",
+    "nhl",
+    "usa",
+    "uk",
+    "eu",
 }
 
 MAX_TITLE_LENGTH = 80
@@ -67,7 +131,9 @@ class TitleSanitizer:
         # Step 4: Front-load brand/model
         if request.brand or request.model:
             cleaned = self._front_load_brand_model(
-                title, request.brand, request.model,
+                title,
+                request.brand,
+                request.model,
             )
             if cleaned != title:
                 changes.append("Moved brand/model to front")
@@ -83,7 +149,9 @@ class TitleSanitizer:
         title = _MULTI_SPACES.sub(" ", title).strip()
 
         brand_model_front = self._check_brand_model_front(
-            title, request.brand, request.model,
+            title,
+            request.brand,
+            request.model,
         )
 
         if not changes:
@@ -140,7 +208,10 @@ class TitleSanitizer:
         return " ".join(result)
 
     def _front_load_brand_model(
-        self, title: str, brand: str | None, model: str | None,
+        self,
+        title: str,
+        brand: str | None,
+        model: str | None,
     ) -> str:
         """Move brand and model to the beginning of the title."""
         prefix_parts: list[str] = []
@@ -180,7 +251,10 @@ class TitleSanitizer:
         return truncated.rstrip()
 
     def _check_brand_model_front(
-        self, title: str, brand: str | None, model: str | None,
+        self,
+        title: str,
+        brand: str | None,
+        model: str | None,
     ) -> bool:
         """Check if brand/model appears in the first 30 characters."""
         front = title[:30].lower()

@@ -25,10 +25,14 @@ logger = logging.getLogger(__name__)
 
 
 class SmartQueue:
-
     WEEKDAY_MAP = {
-        "monday": 0, "tuesday": 1, "wednesday": 2, "thursday": 3,
-        "friday": 4, "saturday": 5, "sunday": 6,
+        "monday": 0,
+        "tuesday": 1,
+        "wednesday": 2,
+        "thursday": 3,
+        "friday": 4,
+        "saturday": 5,
+        "sunday": 6,
     }
 
     def __init__(self, ebay: EbayGateway, config: FlipFlowConfig):
@@ -40,8 +44,11 @@ class SmartQueue:
         self.tz = pytz.timezone(config.surge_window_timezone)
 
     async def enqueue(
-        self, db: AsyncSession, listing_id: int,
-        priority: int = 0, window: str = "sunday_surge",
+        self,
+        db: AsyncSession,
+        listing_id: int,
+        priority: int = 0,
+        window: str = "sunday_surge",
     ) -> QueueEntry:
         """Add a listing to the release queue."""
         listing = await db.get(Listing, listing_id)
@@ -89,14 +96,16 @@ class SmartQueue:
 
             try:
                 # Create and publish on eBay
-                offer = await self.ebay.create_offer({
-                    "sku": listing.sku,
-                    "marketplaceId": "EBAY_US",
-                    "format": "FIXED_PRICE",
-                    "pricingSummary": {
-                        "price": {"value": str(listing.list_price), "currency": "USD"},
-                    },
-                })
+                offer = await self.ebay.create_offer(
+                    {
+                        "sku": listing.sku,
+                        "marketplaceId": "EBAY_US",
+                        "format": "FIXED_PRICE",
+                        "pricingSummary": {
+                            "price": {"value": str(listing.list_price), "currency": "USD"},
+                        },
+                    }
+                )
                 publish_result = await self.ebay.publish_offer(offer["offerId"])
 
                 # Update listing
@@ -131,10 +140,7 @@ class SmartQueue:
             now = now.astimezone(self.tz)
 
         target_day = self.WEEKDAY_MAP.get(self.surge_day, 6)
-        return (
-            now.weekday() == target_day
-            and self.surge_start <= now.hour < self.surge_end
-        )
+        return now.weekday() == target_day and self.surge_start <= now.hour < self.surge_end
 
     async def get_queue_status(self, db: AsyncSession) -> dict:
         """Get counts and summary of queue state."""

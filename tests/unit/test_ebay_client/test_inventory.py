@@ -80,14 +80,19 @@ class TestBulkUpdatePriceQuantity:
         def handler(request: httpx.Request) -> httpx.Response:
             assert request.method == "POST"
             assert "bulk_update_price_quantity" in str(request.url)
-            return httpx.Response(200, json={
-                "responses": [{"sku": "SKU-001", "statusCode": 200}],
-            })
+            return httpx.Response(
+                200,
+                json={
+                    "responses": [{"sku": "SKU-001", "statusCode": 200}],
+                },
+            )
 
         http = build_http_client(handler)
         ep = InventoryEndpoints(http)
-        result = await ep.bulk_update_price_quantity([
-            {"sku": "SKU-001", "price": 29.99},
-        ])
+        result = await ep.bulk_update_price_quantity(
+            [
+                {"sku": "SKU-001", "price": 29.99},
+            ]
+        )
         assert "responses" in result
         await http.close()

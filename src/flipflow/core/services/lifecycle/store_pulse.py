@@ -28,7 +28,9 @@ class StorePulse:
         self.config = config
 
     async def toggle_handling_time(
-        self, db: AsyncSession, target_days: int = 2,
+        self,
+        db: AsyncSession,
+        target_days: int = 2,
     ) -> dict:
         """Toggle handling time on all active listings to force re-index.
 
@@ -50,10 +52,12 @@ class StorePulse:
         updates = []
         for listing in active_listings:
             if listing.ebay_item_id:
-                updates.append({
-                    "sku": listing.sku,
-                    "handling_days": target_days,
-                })
+                updates.append(
+                    {
+                        "sku": listing.sku,
+                        "handling_days": target_days,
+                    }
+                )
 
         if not updates:
             return {"updated": 0, "errors": 0, "message": "No listings with eBay IDs"}
@@ -61,8 +65,7 @@ class StorePulse:
         try:
             result = await self.ebay.bulk_update_price_quantity(updates)
             success_count = sum(
-                1 for r in result.get("responses", [])
-                if r.get("status") == "SUCCESS"
+                1 for r in result.get("responses", []) if r.get("status") == "SUCCESS"
             )
             error_count = len(updates) - success_count
             return {

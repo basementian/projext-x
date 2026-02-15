@@ -12,9 +12,13 @@ def sanitizer() -> TitleSanitizer:
 
 
 def _sanitize(sanitizer, title, brand=None, model=None):
-    return sanitizer.sanitize(TitleSanitizeRequest(
-        title=title, brand=brand, model=model,
-    ))
+    return sanitizer.sanitize(
+        TitleSanitizeRequest(
+            title=title,
+            brand=brand,
+            model=model,
+        )
+    )
 
 
 class TestJunkRemoval:
@@ -92,7 +96,9 @@ class TestCaseNormalization:
 class TestBrandModelFrontLoading:
     def test_moves_brand_to_front(self, sanitizer):
         result = _sanitize(
-            sanitizer, "Vintage Running Shoes Nike", brand="Nike",
+            sanitizer,
+            "Vintage Running Shoes Nike",
+            brand="Nike",
         )
         assert result.sanitized.startswith("Nike")
 
@@ -107,14 +113,19 @@ class TestBrandModelFrontLoading:
 
     def test_doesnt_duplicate_brand(self, sanitizer):
         result = _sanitize(
-            sanitizer, "Nike Air Max 90 Running Shoes", brand="Nike",
+            sanitizer,
+            "Nike Air Max 90 Running Shoes",
+            brand="Nike",
         )
         count = result.sanitized.lower().count("nike")
         assert count == 1
 
     def test_brand_model_in_front_flag(self, sanitizer):
         result = _sanitize(
-            sanitizer, "Nike Air Max 90", brand="Nike", model="Air Max 90",
+            sanitizer,
+            "Nike Air Max 90",
+            brand="Nike",
+            model="Air Max 90",
         )
         assert result.brand_model_in_front is True
 
@@ -170,7 +181,9 @@ class TestChangesTracking:
 
     def test_reports_brand_move(self, sanitizer):
         result = _sanitize(
-            sanitizer, "Running Shoes Nike", brand="Nike",
+            sanitizer,
+            "Running Shoes Nike",
+            brand="Nike",
         )
         assert any("brand" in c.lower() for c in result.changes)
 

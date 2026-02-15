@@ -71,9 +71,12 @@ class TestGetOffersBySku:
     async def test_returns_offers_list(self):
         def handler(request: httpx.Request) -> httpx.Response:
             assert "sku=SKU-001" in str(request.url)
-            return httpx.Response(200, json={
-                "offers": [{"offerId": "OFF-1"}, {"offerId": "OFF-2"}],
-            })
+            return httpx.Response(
+                200,
+                json={
+                    "offers": [{"offerId": "OFF-1"}, {"offerId": "OFF-2"}],
+                },
+            )
 
         http = build_http_client(handler)
         ep = OfferEndpoints(http)

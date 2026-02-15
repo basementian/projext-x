@@ -6,17 +6,13 @@ from httpx import ASGITransport, AsyncClient
 class TestApiKeyAuth:
     async def test_health_is_public(self, app):
         """Health endpoint should work without API key."""
-        async with AsyncClient(
-            transport=ASGITransport(app=app), base_url="http://test"
-        ) as c:
+        async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as c:
             response = await c.get("/api/v1/health")
         assert response.status_code == 200
 
     async def test_protected_endpoint_requires_key(self, app):
         """Listings endpoint should reject requests without API key."""
-        async with AsyncClient(
-            transport=ASGITransport(app=app), base_url="http://test"
-        ) as c:
+        async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as c:
             response = await c.get("/api/v1/listings")
         assert response.status_code == 401
         assert "API key" in response.json()["detail"]

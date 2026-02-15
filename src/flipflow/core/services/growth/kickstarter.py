@@ -29,7 +29,9 @@ class Kickstarter:
         self.duration_days = config.kickstarter_duration_days
 
     async def promote_new_listing(
-        self, db: AsyncSession, listing_id: int,
+        self,
+        db: AsyncSession,
+        listing_id: int,
     ) -> dict:
         """Create a Promoted Listings campaign for a newly listed item.
 
@@ -61,11 +63,13 @@ class Kickstarter:
         ends_at = now + timedelta(days=self.duration_days)
 
         try:
-            ebay_result = await self.ebay.create_campaign({
-                "campaignName": f"Kickstart-{listing.sku}",
-                "adRate": self.ad_rate,
-                "listingId": listing.ebay_item_id,
-            })
+            ebay_result = await self.ebay.create_campaign(
+                {
+                    "campaignName": f"Kickstart-{listing.sku}",
+                    "adRate": self.ad_rate,
+                    "listingId": listing.ebay_item_id,
+                }
+            )
             ebay_campaign_id = ebay_result.get("campaignId")
         except Exception as e:
             logger.error("Failed to create campaign for listing %d: %s", listing_id, e)
@@ -126,6 +130,7 @@ class Kickstarter:
                 errors += 1
 
         await db.flush()
-        logger.info("Kickstarter cleanup: %d expired, %d ended, %d errors",
-                    len(expired), ended, errors)
+        logger.info(
+            "Kickstarter cleanup: %d expired, %d ended, %d errors", len(expired), ended, errors
+        )
         return {"expired_found": len(expired), "ended": ended, "errors": errors}

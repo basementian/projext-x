@@ -3,12 +3,12 @@
 import asyncio
 from logging.config import fileConfig
 
-from alembic import context
 from sqlalchemy import pool
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
-from flipflow.core.models.base import Base
 import flipflow.core.models  # noqa: F401 — ensure all models are registered
+from alembic import context
+from flipflow.core.models.base import Base
 
 config = context.config
 if config.config_file_name is not None:

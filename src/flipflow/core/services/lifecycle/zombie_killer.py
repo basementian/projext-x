@@ -25,7 +25,6 @@ logger = logging.getLogger(__name__)
 
 
 class ZombieKiller:
-
     def __init__(self, ebay: EbayGateway, config: FlipFlowConfig):
         self.ebay = ebay
         self.days_threshold = config.zombie_days_threshold
@@ -45,7 +44,10 @@ class ZombieKiller:
 
         if not active_listings:
             return ZombieScanResult(
-                total_scanned=0, zombies_found=0, purgatory_candidates=0, zombies=[],
+                total_scanned=0,
+                zombies_found=0,
+                purgatory_candidates=0,
+                zombies=[],
             )
 
         # Fetch traffic data from eBay for listings that have item IDs
@@ -74,21 +76,27 @@ class ZombieKiller:
                 if should_purgatory:
                     purgatory_count += 1
 
-                zombies.append(ZombieReport(
-                    listing_id=listing.id,
-                    sku=listing.sku,
-                    title=listing.title,
-                    ebay_item_id=listing.ebay_item_id,
-                    days_active=listing.days_active,
-                    total_views=views,
-                    watchers=listing.watchers,
-                    zombie_cycle_count=listing.zombie_cycle_count,
-                    should_purgatory=should_purgatory,
-                    current_price=listing.current_price or listing.list_price,
-                ))
+                zombies.append(
+                    ZombieReport(
+                        listing_id=listing.id,
+                        sku=listing.sku,
+                        title=listing.title,
+                        ebay_item_id=listing.ebay_item_id,
+                        days_active=listing.days_active,
+                        total_views=views,
+                        watchers=listing.watchers,
+                        zombie_cycle_count=listing.zombie_cycle_count,
+                        should_purgatory=should_purgatory,
+                        current_price=listing.current_price or listing.list_price,
+                    )
+                )
 
-        logger.info("Zombie scan complete: %d scanned, %d zombies, %d purgatory candidates",
-                    len(active_listings), len(zombies), purgatory_count)
+        logger.info(
+            "Zombie scan complete: %d scanned, %d zombies, %d purgatory candidates",
+            len(active_listings),
+            len(zombies),
+            purgatory_count,
+        )
         return ZombieScanResult(
             total_scanned=len(active_listings),
             zombies_found=len(zombies),

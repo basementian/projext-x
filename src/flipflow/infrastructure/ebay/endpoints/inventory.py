@@ -15,7 +15,8 @@ class InventoryEndpoints:
     async def create_inventory_item(self, sku: str, item_data: dict) -> dict:
         """PUT /sell/inventory/v1/inventory_item/{sku}"""
         response = await self._http.put(
-            f"{self.BASE}/inventory_item/{sku}", json=item_data,
+            f"{self.BASE}/inventory_item/{sku}",
+            json=item_data,
         )
         if response.status_code == 204:
             return {"sku": sku, **item_data}
@@ -32,7 +33,8 @@ class InventoryEndpoints:
     async def update_inventory_item(self, sku: str, item_data: dict) -> dict:
         """PUT /sell/inventory/v1/inventory_item/{sku}"""
         response = await self._http.put(
-            f"{self.BASE}/inventory_item/{sku}", json=item_data,
+            f"{self.BASE}/inventory_item/{sku}",
+            json=item_data,
         )
         if response.status_code == 204:
             return {"sku": sku, **item_data}
@@ -64,12 +66,15 @@ class InventoryEndpoints:
                                 "value": str(u.get("price", "")),
                             },
                         }
-                    ] if "price" in u else [],
+                    ]
+                    if "price" in u
+                    else [],
                 }
                 for u in updates
             ]
         }
         response = await self._http.post(
-            f"{self.BASE}/bulk_update_price_quantity", json=payload,
+            f"{self.BASE}/bulk_update_price_quantity",
+            json=payload,
         )
         return response.json()

@@ -96,14 +96,18 @@ class EbayHttpClient:
                 last_error = EbayError(f"Request timed out: {exc}")
                 logger.warning(
                     "eBay timeout (attempt %d/%d): %s",
-                    attempt + 1, MAX_RETRIES, path,
+                    attempt + 1,
+                    MAX_RETRIES,
+                    path,
                 )
                 continue
             except httpx.HTTPError as exc:
                 last_error = EbayError(f"HTTP transport error: {exc}")
                 logger.warning(
                     "eBay transport error (attempt %d/%d): %s",
-                    attempt + 1, MAX_RETRIES, exc,
+                    attempt + 1,
+                    MAX_RETRIES,
+                    exc,
                 )
                 continue
 
@@ -111,12 +115,17 @@ class EbayHttpClient:
                 if response.status_code == 429:
                     self._rate_limiter.record_rate_limit()
                     logger.warning(
-                        "eBay 429 (attempt %d/%d)", attempt + 1, MAX_RETRIES,
+                        "eBay 429 (attempt %d/%d)",
+                        attempt + 1,
+                        MAX_RETRIES,
                     )
                 else:
                     logger.warning(
                         "eBay %d (attempt %d/%d): %s",
-                        response.status_code, attempt + 1, MAX_RETRIES, path,
+                        response.status_code,
+                        attempt + 1,
+                        MAX_RETRIES,
+                        path,
                     )
                 last_error = self._map_error(response)
                 continue

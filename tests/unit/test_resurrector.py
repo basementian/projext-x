@@ -17,12 +17,19 @@ def mock_ebay_empty(empty_mock_ebay):
     return empty_mock_ebay
 
 
-async def _create_zombie(db_session, sku="Z-001", offer_id="OFFER-001", item_id="ITEM-001",
-                          photos=None, cycles=0):
+async def _create_zombie(
+    db_session, sku="Z-001", offer_id="OFFER-001", item_id="ITEM-001", photos=None, cycles=0
+):
     listing = Listing(
-        sku=sku, title="Zombie Test Item", purchase_price=10, list_price=30,
-        status="zombie", days_active=70, total_views=3,
-        ebay_item_id=item_id, offer_id=offer_id,
+        sku=sku,
+        title="Zombie Test Item",
+        purchase_price=10,
+        list_price=30,
+        status="zombie",
+        days_active=70,
+        total_views=3,
+        ebay_item_id=item_id,
+        offer_id=offer_id,
         zombie_cycle_count=cycles,
     )
     listing.photo_urls = photos or ["https://img/1.jpg", "https://img/2.jpg", "https://img/3.jpg"]
@@ -64,7 +71,9 @@ class TestResurrection:
         await resurrector.resurrect(db_session, listing.id)
         assert listing.photo_urls == ["https://img/only.jpg"]
 
-    async def test_listing_resets_after_resurrection(self, resurrector, db_session, mock_ebay_empty):
+    async def test_listing_resets_after_resurrection(
+        self, resurrector, db_session, mock_ebay_empty
+    ):
         listing = await _create_zombie(db_session)
         mock_ebay_empty.offers["OFFER-001"] = {"offerId": "OFFER-001", "status": "PUBLISHED"}
 
@@ -122,6 +131,7 @@ class TestResurrection:
         from sqlalchemy import select
 
         from flipflow.core.models.zombie_record import ZombieRecord
+
         stmt = select(ZombieRecord).where(ZombieRecord.listing_id == listing.id)
         result = await db_session.execute(stmt)
         records = list(result.scalars().all())

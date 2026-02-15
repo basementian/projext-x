@@ -83,6 +83,7 @@ class TestRelationships:
         await repo.create(listing)
 
         from datetime import date
+
         snapshot = ListingSnapshot(
             listing_id=listing.id,
             snapshot_date=date.today(),

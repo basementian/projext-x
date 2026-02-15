@@ -22,7 +22,8 @@ class RealEbayClient:
 
     def __init__(self, config: FlipFlowConfig):
         base_url = (
-            "https://api.ebay.com" if config.ebay_mode == "production"
+            "https://api.ebay.com"
+            if config.ebay_mode == "production"
             else "https://api.sandbox.ebay.com"
         )
         self._token_manager = EbayTokenManager(
@@ -83,10 +84,15 @@ class RealEbayClient:
     # === Analytics ===
 
     async def get_traffic_report(
-        self, listing_ids: list[str], date_range: str, metrics: list[str],
+        self,
+        listing_ids: list[str],
+        date_range: str,
+        metrics: list[str],
     ) -> dict:
         return await self._analytics.get_traffic_report(
-            listing_ids, date_range, metrics,
+            listing_ids,
+            date_range,
+            metrics,
         )
 
     # === Marketing ===
@@ -108,10 +114,15 @@ class RealEbayClient:
     # === Buyer Engagement ===
 
     async def send_offer_to_buyer(
-        self, listing_id: str, buyer_id: str, offer_data: dict,
+        self,
+        listing_id: str,
+        buyer_id: str,
+        offer_data: dict,
     ) -> dict:
         return await self._negotiation.send_offer_to_buyer(
-            listing_id, buyer_id, offer_data,
+            listing_id,
+            buyer_id,
+            offer_data,
         )
 
     async def get_watchers(self, listing_id: str) -> list[dict]:
@@ -120,10 +131,17 @@ class RealEbayClient:
     # === Negotiation ===
 
     async def respond_to_offer(
-        self, listing_id: str, offer_id: str, action: str, counter_amount: float | None = None,
+        self,
+        listing_id: str,
+        offer_id: str,
+        action: str,
+        counter_amount: float | None = None,
     ) -> dict:
         return await self._negotiation.respond_to_offer(
-            listing_id, offer_id, action, counter_amount,
+            listing_id,
+            offer_id,
+            action,
+            counter_amount,
         )
 
     # === Account ===

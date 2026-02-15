@@ -27,7 +27,6 @@ logger = logging.getLogger(__name__)
 
 
 class Resurrector:
-
     def __init__(self, ebay: EbayGateway, config: FlipFlowConfig):
         self.ebay = ebay
         self.cooldown_seconds = config.resurrection_delay_seconds
@@ -37,8 +36,13 @@ class Resurrector:
         listing = await db.get(Listing, listing_id)
         if listing is None:
             return ResurrectionResult(
-                listing_id=listing_id, sku="", old_item_id=None, new_item_id=None,
-                new_offer_id=None, cycle_number=0, success=False,
+                listing_id=listing_id,
+                sku="",
+                old_item_id=None,
+                new_item_id=None,
+                new_offer_id=None,
+                cycle_number=0,
+                success=False,
                 error=f"Listing {listing_id} not found",
             )
 
@@ -83,14 +87,16 @@ class Resurrector:
 
         # Step 5: Create and publish offer
         try:
-            offer = await self.ebay.create_offer({
-                "sku": new_sku,
-                "marketplaceId": "EBAY_US",
-                "format": "FIXED_PRICE",
-                "pricingSummary": {
-                    "price": {"value": str(listing.list_price), "currency": "USD"},
-                },
-            })
+            offer = await self.ebay.create_offer(
+                {
+                    "sku": new_sku,
+                    "marketplaceId": "EBAY_US",
+                    "format": "FIXED_PRICE",
+                    "pricingSummary": {
+                        "price": {"value": str(listing.list_price), "currency": "USD"},
+                    },
+                }
+            )
             offer_id = offer["offerId"]
             publish_result = await self.ebay.publish_offer(offer_id)
             new_item_id = publish_result.get("listingId")
